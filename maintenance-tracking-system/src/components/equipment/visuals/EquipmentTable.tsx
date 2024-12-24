@@ -1,43 +1,18 @@
 "use client";
 
-import { Equipment } from '@/lib/equipment/EquipmentInterface';
+import { Equipment, EquipmentStatus } from '@/lib/equipment/EquipmentInterface';
 import {
+    ColumnDef,
     createColumnHelper,
     flexRender,
     getCoreRowModel,
+    RowSelectionState,
     useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import clsx from 'clsx';
+import { useState, useMemo } from 'react';
+import IndeterminateCheckbox from '@/components/generics/input/IndeterminateCheckbox';
 
-
-const columnHelper = createColumnHelper<Equipment>();
-
-const columns = [
-    columnHelper.accessor('id', {
-        header: 'Id',
-    }),
-    columnHelper.accessor('name', {
-        header: 'Name',
-    }),
-    columnHelper.accessor('serialNumber', {
-        header: 'Serial Number',
-    }),
-    columnHelper.accessor('model', {
-        header: 'Model',
-    }),
-    columnHelper.accessor('department', {
-        header: 'Department',
-    }),
-    columnHelper.accessor('location', {
-        header: 'Location',
-    }),
-    columnHelper.accessor('installDate', {
-        header: 'Installation Date',
-    }),
-    columnHelper.accessor('status', {
-        header: 'Status',
-    }),
-]
 
 interface ComponentProps {
     equipmentArray: Equipment[];
@@ -45,12 +20,92 @@ interface ComponentProps {
 
 const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
     const [data, setData] = useState<Equipment[]>(equipmentArray);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+    const columns = useMemo<ColumnDef<Equipment>[]> (() => [
+        {
+            id: 'select',
+            header: ({ table }) => (
+                <IndeterminateCheckbox
+                    indeterminate={table.getIsSomeRowsSelected()}
+                    rest={{
+                        checked: table.getIsAllRowsSelected(),
+                        onChange: table.getToggleAllRowsSelectedHandler(),
+                    }}
+                />
+            ),
+            cell: ({ row }) => (
+                <IndeterminateCheckbox
+                    indeterminate={row.getIsSomeSelected()}
+                    rest={{
+                        checked: row.getIsSelected(),
+                        disabled: !row.getCanSelect(),
+                        onChange: row.getToggleSelectedHandler(),
+                    }}
+                />
+            ),
+        },
+        {
+            id: 'data',
+            header: "Equipment",
+            columns: [
+                {
+                    accessorKey: 'id',
+                    header: 'Id',
+                },
+                {
+                    accessorKey: 'name',
+                    header: 'Name',
+                },
+                {
+                    accessorKey: 'serialNumber',
+                    header: 'Serial Number',
+                },
+                {
+                    accessorKey: 'model',
+                    header: 'Model',
+                },
+                {
+                    accessorKey: 'department',
+                    header: 'Department',
+                },
+                {
+                    accessorKey: 'location',
+                    header: 'Location',
+                },
+                {
+                    accessorKey: 'installDate',
+                    header: 'Installation Date',
+                },
+                {
+                    accessorKey: 'status',
+                    header: 'Status',
+                },
+            ],
+        }
+    ], []);
 
     const table = useReactTable({
         data,
         columns,
+        enableRowSelection: true,
         getCoreRowModel: getCoreRowModel(),
-    })
+        onRowSelectionChange: setRowSelection,
+        state: {
+            rowSelection,
+        },
+    });
+
+    const EquipmentStatusBackground = ( equipStatus: EquipmentStatus ) => {
+        return clsx(
+            {
+                'bg-green-800':     equipStatus == EquipmentStatus.Operational,
+                'bg-red-800':       equipStatus == EquipmentStatus.Down,
+                'bg-yellow-700':    equipStatus == EquipmentStatus.Maintenance,
+                'bg-gray-600':      equipStatus == EquipmentStatus.Retired,
+            }
+        );
+    };
 
     return (
         <>
@@ -59,13 +114,15 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (
-                                <th key={header.id}>
-                                    {header.isPlaceholder 
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
+                                <th key={header.id} colSpan={header.colSpan}>
+                                    {header.isPlaceholder ? null : (
+                                        <>
+                                            {flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                        </>
+                                    )}
                                 </th>
                             ))}
                         </tr>
@@ -73,7 +130,10 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map(row => (
-                        <tr key={row.id}>
+                        <tr 
+                            key={row.id}
+                            className={EquipmentStatusBackground(row.getValue('status'))}
+                        >
                             {row.getVisibleCells().map(cell => (
                                 <td key={cell.id}>
                                     {flexRender(
@@ -86,6 +146,9 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                     ))}
                 </tbody>
             </table>
+            <div>
+                {JSON.stringify(table.getState().rowSelection, null, 2)}
+            </div>
         </>
     );
 }
