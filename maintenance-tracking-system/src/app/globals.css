@@ -29,6 +29,7 @@ tbody {
 }
 
 th {
+  border-top: 3px solid lightgray;
   border-bottom: 3px solid lightgray;
   border-right: 3px solid lightgray;
   padding: 1px 10px;
@@ -36,5 +37,6 @@ th {
 
 td {
   border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
   padding: 10px;
 }
