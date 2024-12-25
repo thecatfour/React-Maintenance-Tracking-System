@@ -6,12 +6,14 @@ import {
     createColumnHelper,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     RowSelectionState,
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import { useState, useMemo } from 'react';
 import IndeterminateCheckbox from '@/components/generics/input/IndeterminateCheckbox';
+import TableFilter from '@/components/generics/input/TableFilter';
 
 
 interface ComponentProps {
@@ -25,6 +27,8 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
     const columns = useMemo<ColumnDef<Equipment>[]> (() => [
         {
             id: 'select',
+            minSize: 0,
+            size: 0,
             header: ({ table }) => (
                 <IndeterminateCheckbox
                     indeterminate={table.getIsSomeRowsSelected()}
@@ -35,14 +39,17 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                 />
             ),
             cell: ({ row }) => (
-                <IndeterminateCheckbox
-                    indeterminate={row.getIsSomeSelected()}
-                    rest={{
-                        checked: row.getIsSelected(),
-                        disabled: !row.getCanSelect(),
-                        onChange: row.getToggleSelectedHandler(),
-                    }}
-                />
+                <div className='flex justify-center'>
+                   <IndeterminateCheckbox
+                        indeterminate={row.getIsSomeSelected()}
+                        rest={{
+                            checked: row.getIsSelected(),
+                            disabled: !row.getCanSelect(),
+                            onChange: row.getToggleSelectedHandler(),
+                        }}
+                    /> 
+                </div>
+                
             ),
         },
         {
@@ -52,34 +59,42 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                 {
                     accessorKey: 'id',
                     header: 'Id',
+                    size: 100,
                 },
                 {
                     accessorKey: 'name',
                     header: 'Name',
-                },
-                {
-                    accessorKey: 'serialNumber',
-                    header: 'Serial Number',
-                },
-                {
-                    accessorKey: 'model',
-                    header: 'Model',
-                },
-                {
-                    accessorKey: 'department',
-                    header: 'Department',
-                },
-                {
-                    accessorKey: 'location',
-                    header: 'Location',
-                },
-                {
-                    accessorKey: 'installDate',
-                    header: 'Installation Date',
+                    size: 200,
                 },
                 {
                     accessorKey: 'status',
                     header: 'Status',
+                    size: 100,
+                },
+                {
+                    accessorKey: 'serialNumber',    
+                    header: 'Serial Number',
+                    size: 150,
+                },
+                {
+                    accessorKey: 'model',
+                    header: 'Model',
+                    size: 150,
+                },
+                {
+                    accessorKey: 'department',
+                    header: 'Department',
+                    size: 100,
+                },
+                {
+                    accessorKey: 'location',
+                    header: 'Location',
+                    size: 200,
+                },
+                {
+                    accessorKey: 'installDate',
+                    header: 'Installation Date',
+                    size: 600,
                 },
             ],
         }
@@ -90,6 +105,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
         columns,
         enableRowSelection: true,
         getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         onRowSelectionChange: setRowSelection,
         state: {
             rowSelection,
@@ -109,18 +125,32 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
 
     return (
         <>
-            <table>
+            <table style={{ minWidth: table.getCenterTotalSize(), width: '100%' }}>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (
-                                <th key={header.id} colSpan={header.colSpan}>
+                                <th 
+                                    key={header.id} 
+                                    colSpan={header.colSpan}
+                                    style={{ 
+                                        width: header.getSize(),
+                                    }}
+                                >
                                     {header.isPlaceholder ? null : (
                                         <>
                                             {flexRender(
                                                 header.column.columnDef.header,
                                                 header.getContext()
                                             )}
+                                            {header.column.getCanFilter() ? (
+                                                <div>
+                                                    <TableFilter 
+                                                        column={header.column}
+                                                        table={table}
+                                                    />
+                                                </div>
+                                            ) : null }
                                         </>
                                     )}
                                 </th>
@@ -129,13 +159,18 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                     ))}
                 </thead>
                 <tbody>
-                    {table.getRowModel().rows.map(row => (
+                    {table.getRowModel().rows.map((row) => (
                         <tr 
                             key={row.id}
                             className={EquipmentStatusBackground(row.getValue('status'))}
                         >
-                            {row.getVisibleCells().map(cell => (
-                                <td key={cell.id}>
+                            {row.getVisibleCells().map((cell) => (
+                                <td 
+                                    key={cell.id}
+                                    style={{
+                                        width: cell.column.getSize(),
+                                    }}
+                                >
                                     {flexRender(
                                         cell.column.columnDef.cell,
                                         cell.getContext()
