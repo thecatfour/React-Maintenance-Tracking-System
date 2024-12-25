@@ -34,7 +34,7 @@ export const exampleEquipment: Equipment[] = [
     },
     {
         id: "3",
-        name: "Packacking machine",
+        name: "Packaging machine",
         location: "Site 2",
         department: EquipmentDepartment.Packaging,
         model: "Mk 2",
