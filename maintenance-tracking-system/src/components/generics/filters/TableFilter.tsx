@@ -1,6 +1,6 @@
 import { Column, Table } from "@tanstack/react-table";
 
-const inputClass = "bg-white text-black w-full mb-2";
+const inputClass = "bg-white text-black mb-2 w-full";
 
 interface ComponentProps {
     column: Column<any, any>;
@@ -10,7 +10,7 @@ interface ComponentProps {
 const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
     const checkValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
 
-    if (typeof checkValue == 'string') {
+    if (typeof checkValue == "string") {
         return (
             <input
                 type="text"
@@ -20,6 +20,24 @@ const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
                 className={inputClass}
             />
         );
+    }
+
+    if (checkValue instanceof Date) {
+        return (
+            <div className="flex flex-row gap-10">
+                <input
+                    type="date"
+                    onChange={(e) => column.setFilterValue((old: any) => [e.target.value, old?.[1]])}
+                    className={inputClass}
+                />
+                to
+                <input
+                    type="date"
+                    onChange={(e) => column.setFilterValue((old: any) => [old?.[0], e.target.value])}
+                    className={inputClass}
+                />
+            </div>
+        )
     }
 
     return (
