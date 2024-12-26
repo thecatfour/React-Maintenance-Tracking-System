@@ -3,7 +3,6 @@
 import { Equipment, EquipmentStatus } from '@/lib/equipment/EquipmentInterface';
 import {
     ColumnDef,
-    createColumnHelper,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -13,7 +12,8 @@ import {
 import clsx from 'clsx';
 import { useState, useMemo } from 'react';
 import IndeterminateCheckbox from '@/components/generics/input/IndeterminateCheckbox';
-import TableFilter from '@/components/generics/input/TableFilter';
+import TableFilter from '@/components/generics/filters/TableFilter';
+import dateFilter from '@/components/generics/filters/DateFilter';
 
 
 interface ComponentProps {
@@ -27,7 +27,6 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
     const columns = useMemo<ColumnDef<Equipment>[]> (() => [
         {
             id: 'select',
-            minSize: 0,
             size: 0,
             header: ({ table }) => (
                 <IndeterminateCheckbox
@@ -94,7 +93,8 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                 {
                     accessorKey: 'installDate',
                     header: 'Installation Date',
-                    size: 600,
+                    size: 500,
+                    filterFn: dateFilter,
                 },
             ],
         }
