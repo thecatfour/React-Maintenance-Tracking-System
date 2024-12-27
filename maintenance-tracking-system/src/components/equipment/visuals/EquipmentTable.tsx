@@ -6,7 +6,9 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
+    getSortedRowModel,
     RowSelectionState,
+    SortingState,
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
@@ -23,6 +25,7 @@ interface ComponentProps {
 const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
     const [data, setData] = useState<Equipment[]>(equipmentArray);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+    const [sorting, setSorting] = useState<SortingState>([]);
 
     const columns = useMemo<ColumnDef<Equipment>[]> (() => [
         {
@@ -73,7 +76,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                 {
                     accessorKey: 'serialNumber',    
                     header: 'Serial Number',
-                    size: 150,
+                    size: 175,
                 },
                 {
                     accessorKey: 'model',
@@ -83,7 +86,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                 {
                     accessorKey: 'department',
                     header: 'Department',
-                    size: 100,
+                    size: 150,
                 },
                 {
                     accessorKey: 'location',
@@ -106,9 +109,12 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
         enableRowSelection: true,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
         onRowSelectionChange: setRowSelection,
+        onSortingChange: setSorting,
         state: {
             rowSelection,
+            sorting,
         },
     });
 
@@ -138,11 +144,31 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                                     }}
                                 >
                                     {header.isPlaceholder ? null : (
-                                        <>
+                                        <div
+                                            className={
+                                                header.column.getCanSort()
+                                                ? "cursor-pointer select-none"
+                                                : ""
+                                            }
+                                            onClick={header.column.getToggleSortingHandler()}
+                                            title={
+                                                header.column.getCanSort()
+                                                ? header.column.getNextSortingOrder() === "asc"
+                                                ? "Sort ascending"
+                                                : header.column.getNextSortingOrder() === "desc"
+                                                    ? "Sort descending"
+                                                    : "Clear sort"
+                                                : undefined   
+                                            }
+                                        >
                                             {flexRender(
                                                 header.column.columnDef.header,
                                                 header.getContext()
                                             )}
+                                            {{
+                                                asc: ' 🔼',
+                                                desc: ' 🔽',
+                                            }[header.column.getIsSorted() as string] ?? null}
                                             {header.column.getCanFilter() ? (
                                                 <div>
                                                     <TableFilter 
@@ -151,7 +177,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                                                     />
                                                 </div>
                                             ) : null }
-                                        </>
+                                        </div>
                                     )}
                                 </th>
                             ))}
