@@ -1,24 +1,24 @@
-export enum EquipmentDepartment {
-    Machining = 'Machining',
-    Assembly = 'Assembly',
-    Packaging = 'Packaging',
-    Shipping = 'Shipping',
-}
+export const EquipmentDepartment = [
+    "Machining", 
+    "Assembly", 
+    "Packaging", 
+    "Shipping",
+];
 
-export enum EquipmentStatus {
-    Operational = 'Operational',
-    Down = 'Down',
-    Maintenance = 'Maintenance',
-    Retired = 'Retired',
-}
+export const EquipmentStatus = [
+    "Operational",
+    "Down",
+    "Maintenance",
+    "Retired",
+];
 
 export interface Equipment {
     id: string;
     name: string;
     location: string;
-    department: EquipmentDepartment;
+    department: 'Machining' | 'Assembly' | 'Packaging' | 'Shipping';
     model: string;
     serialNumber: string;
     installDate: Date;
-    status: EquipmentStatus;
+    status: 'Operational' | 'Down' | 'Maintenance' | 'Retired';
 }
