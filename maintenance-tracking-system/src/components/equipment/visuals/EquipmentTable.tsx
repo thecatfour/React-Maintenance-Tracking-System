@@ -1,6 +1,6 @@
 "use client";
 
-import { Equipment, EquipmentStatus } from '@/lib/equipment/EquipmentInterface';
+import { Equipment } from '@/lib/equipment/EquipmentInterface';
 import {
     ColumnDef,
     flexRender,
@@ -12,7 +12,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, Dispatch } from 'react';
 import IndeterminateCheckbox from '@/components/generics/input/IndeterminateCheckbox';
 import TableFilter from '@/components/generics/filters/TableFilter';
 import dateFilter from '@/components/generics/filters/DateFilter';
@@ -20,12 +20,21 @@ import dateFilter from '@/components/generics/filters/DateFilter';
 
 interface ComponentProps {
     equipmentArray: Equipment[];
+    setSelectedRows: Dispatch<RowSelectionState>;
 }
 
-const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
+const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedRows }) => {
     const [data, setData] = useState<Equipment[]>(equipmentArray);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
+
+    useEffect(() => {
+        setSelectedRows(rowSelection);
+    }, [rowSelection])
+
+    useEffect(() => {
+        setData(equipmentArray);
+    }, [equipmentArray])
 
     const columns = useMemo<ColumnDef<Equipment>[]> (() => [
         {
@@ -56,7 +65,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
         },
         {
             id: 'data',
-            header: "Equipment",
+            header: 'Equipment',
             columns: [
                 {
                     accessorKey: 'id',
@@ -107,6 +116,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
         data,
         columns,
         enableRowSelection: true,
+        getRowId: row => row.id,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -118,13 +128,13 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
         },
     });
 
-    const EquipmentStatusBackground = ( equipStatus: EquipmentStatus ) => {
+    const EquipmentStatusBackground = ( equipStatus: string ) => {
         return clsx(
             {
-                'bg-green-800':     equipStatus == EquipmentStatus.Operational,
-                'bg-red-800':       equipStatus == EquipmentStatus.Down,
-                'bg-yellow-700':    equipStatus == EquipmentStatus.Maintenance,
-                'bg-gray-600':      equipStatus == EquipmentStatus.Retired,
+                'bg-green-800':     equipStatus == 'Operational',
+                'bg-red-800':       equipStatus == 'Down',
+                'bg-yellow-700':    equipStatus == 'Maintenance',
+                'bg-gray-600':      equipStatus == 'Retired',
             }
         );
     };
@@ -144,31 +154,33 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                                     }}
                                 >
                                     {header.isPlaceholder ? null : (
-                                        <div
+                                        <>
+                                            <div
                                             className={
                                                 header.column.getCanSort()
-                                                ? "cursor-pointer select-none"
-                                                : ""
+                                                ? 'cursor-pointer select-none'
+                                                : ''
                                             }
                                             onClick={header.column.getToggleSortingHandler()}
                                             title={
                                                 header.column.getCanSort()
-                                                ? header.column.getNextSortingOrder() === "asc"
-                                                ? "Sort ascending"
-                                                : header.column.getNextSortingOrder() === "desc"
-                                                    ? "Sort descending"
-                                                    : "Clear sort"
+                                                ? header.column.getNextSortingOrder() === 'asc'
+                                                ? 'Sort ascending'
+                                                : header.column.getNextSortingOrder() === 'desc'
+                                                    ? 'Sort descending'
+                                                    : 'Clear sort'
                                                 : undefined   
                                             }
-                                        >
-                                            {flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-                                            {{
-                                                asc: ' 🔼',
-                                                desc: ' 🔽',
-                                            }[header.column.getIsSorted() as string] ?? null}
+                                            >
+                                                {flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                                {{
+                                                    asc: ' 🔼',
+                                                    desc: ' 🔽',
+                                                }[header.column.getIsSorted() as string] ?? null}
+                                            </div>
                                             {header.column.getCanFilter() ? (
                                                 <div>
                                                     <TableFilter 
@@ -177,7 +189,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray }) => {
                                                     />
                                                 </div>
                                             ) : null }
-                                        </div>
+                                        </>
                                     )}
                                 </th>
                             ))}
