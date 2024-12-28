@@ -7,8 +7,6 @@ import {
 
 import {
     Equipment, 
-    EquipmentDepartment, 
-    EquipmentStatus,
 } from "@/lib/equipment/EquipmentInterface";
 
 export const exampleEquipment: Equipment[] = [
@@ -16,41 +14,41 @@ export const exampleEquipment: Equipment[] = [
         id: "1",
         name: "Assembly machine",
         location: "Site 1",
-        department: EquipmentDepartment.Assembly,
+        department: "Assembly",
         model: "Mk 2",
         serialNumber: "123",
         installDate: new Date("2024-12-01"),
-        status: EquipmentStatus.Down,
+        status: "Down",
     },
     {
         id: "2",
         name: "Machining machine",
         location: "Site 1",
-        department: EquipmentDepartment.Machining,
+        department: "Machining",
         model: "Mk 1",
         serialNumber: "234",
         installDate: new Date("2024-12-02"),
-        status: EquipmentStatus.Operational,
+        status: "Operational",
     },
     {
         id: "3",
         name: "Packaging machine",
         location: "Site 2",
-        department: EquipmentDepartment.Packaging,
+        department: "Packaging",
         model: "Mk 2",
         serialNumber: "345",
         installDate: new Date("2024-12-03"),
-        status: EquipmentStatus.Maintenance,
+        status: "Maintenance",
     },
     {
         id: "4",
         name: "Shipping machine",
         location: "Site 2",
-        department: EquipmentDepartment.Shipping,
+        department: "Shipping",
         model: "Mk 1",
         serialNumber: "456",
         installDate: new Date("2024-12-04"),
-        status: EquipmentStatus.Retired,
+        status: "Retired",
     }
 ]
 
