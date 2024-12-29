@@ -14,6 +14,11 @@ interface ComponentProps {
 
 const EquipmentStatusForm: React.FC<ComponentProps> = ({ allRows, setRows, selectedRows, onClose }) => {
     const { register, handleSubmit } = useForm();
+
+    const onCancel = (event: any) => {
+        event.preventDefault();
+        onClose(false);
+    }
     
     const onSubmit = (data: any) => {
         const rows = new Set<string>();
@@ -61,7 +66,7 @@ const EquipmentStatusForm: React.FC<ComponentProps> = ({ allRows, setRows, selec
                 <button type="submit" className="bg-green-700 hover:bg-green-700/70 px-1 py-0.5 rounded-lg">
                     Confirm
                 </button>
-                <button onClick={() => onClose(false)} className="bg-red-700 hover:bg-red-700/70 px-1 py-0.5 rounded-lg">
+                <button onClick={onCancel} className="bg-red-700 hover:bg-red-700/70 px-1 py-0.5 rounded-lg">
                     Cancel
                 </button>
             </div>  
