@@ -75,7 +75,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                 {
                     accessorKey: 'name',
                     header: 'Name',
-                    size: 200,
+                    size: 250,
                 },
                 {
                     accessorKey: 'status',
@@ -105,8 +105,9 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                 {
                     accessorKey: 'installDate',
                     header: 'Installation Date',
-                    size: 500,
+                    size: 200,
                     filterFn: dateFilter,
+                    cell: ({ row }) => {return <>{row.original.installDate.toUTCString()}</>}
                 },
             ],
         }
@@ -151,6 +152,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                                     colSpan={header.colSpan}
                                     style={{ 
                                         width: header.getSize(),
+                                        minWidth: header.getSize(),
                                     }}
                                 >
                                     {header.isPlaceholder ? null : (
@@ -205,9 +207,6 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                             {row.getVisibleCells().map((cell) => (
                                 <td 
                                     key={cell.id}
-                                    style={{
-                                        width: cell.column.getSize(),
-                                    }}
                                 >
                                     {flexRender(
                                         cell.column.columnDef.cell,
