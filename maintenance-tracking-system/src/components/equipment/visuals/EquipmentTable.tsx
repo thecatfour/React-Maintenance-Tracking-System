@@ -219,9 +219,6 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                     ))}
                 </tbody>
             </table>
-            <div>
-                {JSON.stringify(table.getState().rowSelection, null, 2)}
-            </div>
         </>
     );
 }
