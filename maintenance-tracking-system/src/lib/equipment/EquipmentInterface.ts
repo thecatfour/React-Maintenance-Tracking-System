@@ -3,14 +3,14 @@ export const EquipmentDepartment = [
     "Assembly", 
     "Packaging", 
     "Shipping",
-];
+] as const;
 
 export const EquipmentStatus = [
     "Operational",
     "Down",
     "Maintenance",
     "Retired",
-];
+] as const;
 
 export interface Equipment {
     id: string;
