@@ -1,9 +1,11 @@
 "use client";
 
+import ConfirmAndCancel from "@/components/generics/buttons/ConfirmAndCancel";
+import InputSelect from "@/components/generics/input/InputSelect";
 import { Equipment, EquipmentStatus } from "@/lib/equipment/EquipmentInterface"
 import { RowSelectionState } from "@tanstack/react-table";
 import { Dispatch } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 interface ComponentProps {
     allRows: Equipment[];
@@ -13,13 +15,8 @@ interface ComponentProps {
 }
 
 const EquipmentStatusForm: React.FC<ComponentProps> = ({ allRows, setRows, selectedRows, onClose }) => {
-    const { register, handleSubmit } = useForm();
+    const methods = useForm();
 
-    const onCancel = (event: any) => {
-        event.preventDefault();
-        onClose(false);
-    }
-    
     const onSubmit = (data: any) => {
         const rows = new Set<string>();
 
@@ -34,43 +31,31 @@ const EquipmentStatusForm: React.FC<ComponentProps> = ({ allRows, setRows, selec
     }
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-2.5"
-        >
-            <div className="text-2xl font-bold">
-                Update Equipment Status
-            </div>
+        <FormProvider {...methods}>
+            <form
+                onSubmit={methods.handleSubmit(onSubmit)}
+                className="flex flex-col gap-2.5"
+            >
+                <div className="text-2xl font-bold">
+                    Update Equipment Status
+                </div>
 
-            <div className="flex gap-2">
-                <label>
-                    Updated Status: 
-                </label>
-                <select
-                    {...register("status")}
-                    className="bg-white text-black"
-                >
-                    {EquipmentStatus.map((option) => (
-                        <option key={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                <InputSelect
+                    label="Status"
+                    name="status"
+                    choices={EquipmentStatus}
+                />
 
-            <div>
-                This will change {Object.keys(selectedRows).length} row/s.
-            </div>
-            
-            <div className="flex justify-between">
-                <button type="submit" className="bg-green-700 hover:bg-green-700/70 px-1 py-0.5 rounded-lg">
-                    Confirm
-                </button>
-                <button onClick={onCancel} className="bg-red-700 hover:bg-red-700/70 px-1 py-0.5 rounded-lg">
-                    Cancel
-                </button>
-            </div>  
-        </form>
+                <div>
+                    This will change {Object.keys(selectedRows).length} row/s.
+                </div>
+                
+                <ConfirmAndCancel
+                    onConfirm={methods.handleSubmit(onSubmit)}
+                    onClose={onClose}
+                />
+            </form>
+        </FormProvider>
     );
 }
 
