@@ -11,7 +11,7 @@ import {
 
 export const exampleEquipment: Equipment[] = [
     {
-        id: "1",
+        id: "0",
         name: "Assembly machine",
         location: "Site 1",
         department: "Assembly",
@@ -21,7 +21,7 @@ export const exampleEquipment: Equipment[] = [
         status: "Down",
     },
     {
-        id: "2",
+        id: "1",
         name: "Machining machine",
         location: "Site 1",
         department: "Machining",
@@ -31,7 +31,7 @@ export const exampleEquipment: Equipment[] = [
         status: "Operational",
     },
     {
-        id: "3",
+        id: "2",
         name: "Packaging machine",
         location: "Site 2",
         department: "Packaging",
@@ -41,7 +41,7 @@ export const exampleEquipment: Equipment[] = [
         status: "Maintenance",
     },
     {
-        id: "4",
+        id: "3",
         name: "Shipping machine",
         location: "Site 2",
         department: "Shipping",
@@ -54,8 +54,8 @@ export const exampleEquipment: Equipment[] = [
 
 export const exampleMaintenanceRecord: MaintenanceRecord[] = [
     {
-        id: "1",
-        equipmentId: "2",
+        id: "0",
+        equipmentId: "1",
         date: new Date("2024-12-03"),
         type: MaintenanceRecordType.Preventive,
         technician: "Steve",
@@ -65,8 +65,8 @@ export const exampleMaintenanceRecord: MaintenanceRecord[] = [
         completionStatus: MaintenanceRecordStatus.Complete,
     },
     {
-        id: "2",
-        equipmentId: "1",
+        id: "1",
+        equipmentId: "0",
         date: new Date("2024-12-04"),
         type: MaintenanceRecordType.Emergency,
         technician: "Joe",
@@ -76,8 +76,8 @@ export const exampleMaintenanceRecord: MaintenanceRecord[] = [
         completionStatus: MaintenanceRecordStatus.Pending_Parts,
     },
     {
-        id: "3",
-        equipmentId: "3",
+        id: "2",
+        equipmentId: "2",
         date: new Date("2024-12-05"),
         type: MaintenanceRecordType.Repair,
         technician: "Allen",
