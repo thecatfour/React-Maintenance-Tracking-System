@@ -1,8 +1,8 @@
 import { FilterFn, Row } from "@tanstack/react-table";
 
 const dateFilter: FilterFn<any> = (row: Row<any>, columnId: string, filterValue: any) => {
-    const emptyStartDate: Boolean = (filterValue[0] == '' || filterValue[0] == null);
-    const emptyEndDate:   Boolean = (filterValue[1] == '' || filterValue[1] == null);
+    const emptyStartDate: boolean = (filterValue[0] == '' || filterValue[0] == null);
+    const emptyEndDate:   boolean = (filterValue[1] == '' || filterValue[1] == null);
 
     if (emptyStartDate && emptyEndDate) {
         return true;
