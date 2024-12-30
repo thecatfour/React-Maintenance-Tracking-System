@@ -24,7 +24,7 @@ const InputWithErrorMessage: React.FC<ComponentProps> = ({ type, placeholder, na
                 type={type}
                 {...register(name)}
                 placeholder={`Enter ${placeholder}...`}
-                className="bg-white text-black w-full"
+                className="bg-white text-black w-full pl-1"
             />
         </div>
     );
