@@ -13,7 +13,7 @@ interface ComponentProps {
     selectedRows: RowSelectionState;
 }
 
-const BulkStatusUpdateButton: React.FC<ComponentProps> = ({ className, allRows, setRows, selectedRows }) => {
+const EquipmentStatusUpdateButton: React.FC<ComponentProps> = ({ className, allRows, setRows, selectedRows }) => {
     const [isOpen, setIsOpen] = useState(false);
     
     return (
@@ -40,4 +40,4 @@ const BulkStatusUpdateButton: React.FC<ComponentProps> = ({ className, allRows, 
     );
 }
 
-export default BulkStatusUpdateButton;
+export default EquipmentStatusUpdateButton;
