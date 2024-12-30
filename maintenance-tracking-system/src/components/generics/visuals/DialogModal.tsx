@@ -16,7 +16,7 @@ const DialogModal: React.FC<ComponentProps> = ({ open, onClose, children }) => {
                 <div className="fixed bg-black/50 inset-0 w-screen">
                     <div className="flex min-h-full items-center justify-center">
                         <DialogPanel
-                            className="w-fit max-w-md bg-neutral-700 p-4"
+                            className="w-fit bg-neutral-700 p-4"
                         >
                             {children}
                         </DialogPanel>
