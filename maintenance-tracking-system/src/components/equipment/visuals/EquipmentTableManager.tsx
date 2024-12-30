@@ -5,7 +5,9 @@ import { useState } from "react";
 import EquipmentTable from "./EquipmentTable";
 import { RowSelectionState } from "@tanstack/react-table";
 import EquipmentStatusUpdateButton from "@/components/equipment/buttons/EquipmentStatusUpdateButton";
-import EquipmentCreateForm from "../forms/EquipmentCreateForm";
+import EquipmentCreateForm from "../forms/EquipmentFullForm";
+import EquipmentCreateButton from "@/components/equipment/buttons/EquipmentCreateButton";
+import EquipmentEditOneButton from "../buttons/EquipmentEditOneButton";
 
 interface ComponentProps {
     initialData: Equipment[];
@@ -17,20 +19,27 @@ const EquipmentTableManager: React.FC<ComponentProps> = ({ initialData }) => {
 
     return (
         <div className="flex flex-col p-2 gap-2">
-            <div>
+            <div className="flex gap-2">
                 <EquipmentStatusUpdateButton
-                    className="bg-white/50 p-1 rounded-lg"
+                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
                     allRows={data}
                     setRows={setData}
                     selectedRows={selectedRows}
-                /> 
-            </div>
+                />
 
-            <EquipmentCreateForm
-                allRows={data}
-                setRows={setData}
-                onClose={null}
-            />
+                <EquipmentCreateButton
+                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
+                    allRows={data}
+                    setRows={setData}
+                />
+
+                <EquipmentEditOneButton
+                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
+                    allRows={data}
+                    setRows={setData}
+                    selectedRows={selectedRows}
+                />
+            </div>
             
             <EquipmentTable
                 equipmentArray={data}
