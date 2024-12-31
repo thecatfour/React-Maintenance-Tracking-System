@@ -5,11 +5,9 @@ import {
     MaintenanceRecordType,
 } from "@/lib/maintenance-records/MaintenanceRecordInterface";
 
-import {
-    Equipment, 
-} from "@/lib/equipment/EquipmentInterface";
+import { Equipment } from "@/lib/equipment/EquipmentInterface";
 
-export const exampleEquipment: Equipment[] = [
+export const EXAMPLE_EQUIPMENT: Equipment[] = [
     {
         id: "0",
         name: "Assembly machine",
@@ -50,7 +48,7 @@ export const exampleEquipment: Equipment[] = [
         installDate: new Date("2024-12-04"),
         status: "Retired",
     }
-]
+] as const;
 
 export const exampleMaintenanceRecord: MaintenanceRecord[] = [
     {
