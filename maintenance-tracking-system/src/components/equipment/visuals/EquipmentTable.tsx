@@ -150,6 +150,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                                 <th 
                                     key={header.id} 
                                     colSpan={header.colSpan}
+                                    data-testid={`equipment-table-header-${header.id}`}
                                     style={{ 
                                         width: header.getSize(),
                                         minWidth: header.getSize(),

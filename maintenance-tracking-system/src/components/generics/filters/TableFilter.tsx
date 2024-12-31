@@ -13,6 +13,7 @@ const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
     if (typeof checkValue == "string") {
         return (
             <input
+                data-testid="string-1"
                 type="text"
                 value={(column.getFilterValue() ?? "") as string}
                 onChange={(e) => column.setFilterValue(e.target.value)}
@@ -26,12 +27,14 @@ const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
         return (
             <div className="flex flex-row gap-10">
                 <input
+                    data-testid="date-1"
                     type="date"
                     onChange={(e) => column.setFilterValue((old: any) => [e.target.value, old?.[1]])}
                     className={inputClass}
                 />
                 to
                 <input
+                    data-testid="date-2"
                     type="date"
                     onChange={(e) => column.setFilterValue((old: any) => [old?.[0], e.target.value])}
                     className={inputClass}
