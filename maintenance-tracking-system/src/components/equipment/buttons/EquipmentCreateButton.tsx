@@ -19,6 +19,7 @@ const EquipmentCreateButton: React.FC<ComponentProps> = ({ className, allRows, s
             <button
                 className={className}
                 onClick={() => setIsOpen(true)}
+                data-testid="add-one-equipment"
             >
                 Add Equipment
             </button>

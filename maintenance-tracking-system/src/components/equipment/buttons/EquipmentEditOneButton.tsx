@@ -45,6 +45,7 @@ const EquipmentEditOneButton: React.FC<ComponentProps> = ({ className, allRows, 
             <button
                 onClick={tryOpeningForm}
                 className={className}
+                data-testid="edit-one-equipment"
             >
                 Edit One Equipment
             </button>
