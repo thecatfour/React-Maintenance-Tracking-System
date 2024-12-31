@@ -200,12 +200,14 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr 
+                        <tr
+                            data-testid="equipment-row"
                             key={row.id}
                             className={EquipmentStatusBackground(row.getValue('status'))}
                         >
                             {row.getVisibleCells().map((cell) => (
-                                <td 
+                                <td
+                                    data-testid={cell.column.id}
                                     key={cell.id}
                                 >
                                     {flexRender(

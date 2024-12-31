@@ -21,6 +21,7 @@ const InputWithErrorMessage: React.FC<ComponentProps> = ({ type, placeholder, na
             </div>
 
             <input
+                aria-label={name}
                 type={type}
                 {...register(name)}
                 placeholder={`Enter ${placeholder}...`}

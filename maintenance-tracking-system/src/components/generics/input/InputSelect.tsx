@@ -1,20 +1,21 @@
 import { useFormContext } from "react-hook-form";
 
 interface ComponentProps {
-    label: string;
+    display: string;
     name: string;
     choices: readonly any[];
 }
 
-const InputSelect: React.FC<ComponentProps> = ({ label, name, choices }) => {
+const InputSelect: React.FC<ComponentProps> = ({ display, name, choices }) => {
     const { register } = useFormContext();
     
     return (
         <div className="flex gap-2">
-            <label>
-                {label}:
-            </label>
+            <div>
+                {display}:
+            </div>
             <select
+                aria-label={name}
                 {...register(name)}
                 className="bg-white text-black"
             >
