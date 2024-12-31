@@ -83,13 +83,13 @@ const EquipmentFullForm: React.FC<ComponentProps> = ({ allRows, setRows, onClose
 
                 <div className="flex justify-between mt-2">
                     <InputSelect
-                        label="Department"
+                        display="Department"
                         name="department"
                         choices={EquipmentDepartment}
                     />
 
                     <InputSelect
-                        label="Status"
+                        display="Status"
                         name="status"
                         choices={EquipmentStatus}
                     />

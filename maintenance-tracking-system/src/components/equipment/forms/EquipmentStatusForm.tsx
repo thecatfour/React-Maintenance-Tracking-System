@@ -41,7 +41,7 @@ const EquipmentStatusForm: React.FC<ComponentProps> = ({ allRows, setRows, selec
                 </div>
 
                 <InputSelect
-                    label="Status"
+                    display="Status"
                     name="status"
                     choices={EquipmentStatus}
                 />
