@@ -9,7 +9,7 @@ const PLAYWRIGHT_EQUIPMENT: Equipment[] = [
         name: "PW Assembler",
         location: "Site 3",
         department: "Assembly",
-        model: "Mk 1",
+        model: "Mk 3",
         serialNumber: "1357",
         installDate: new Date("2024-12-20"),
         status: "Down",
@@ -25,6 +25,10 @@ const PLAYWRIGHT_EQUIPMENT: Equipment[] = [
         status: "Operational",
     },
 ] as const;
+
+/*
+    Helper functions
+*/
 
 // Helper function for checking a row in the equipment table
 async function checkEquipmentRow(page: Page, rowNum: number, compareEquipment: Equipment) {
@@ -61,6 +65,18 @@ async function createEquipment(page: Page, newEquipment: Equipment) {
 
     // Check if modal is closed
     await expect(page.getByTestId("dialog-modal")).toBeVisible({visible: false});
+}
+
+// Helper function for using a single string filter in a table
+async function checkSingleStringFilter(page: Page, headerId: string, input: string) {
+    await page.getByTestId(headerId).getByTestId("string-1").fill(input);
+
+    // Use headerId to get the correct column to check
+    const columnName = headerId.substring(headerId.lastIndexOf('-')+1, headerId.length)
+
+    await expect(page.getByTestId("equipment-row").nth(0).getByTestId(columnName)).toContainText(input);
+    
+    await page.getByTestId(headerId).getByTestId("string-1").fill("");
 }
 
 /*
@@ -203,5 +219,57 @@ test.describe("Equipment Modifications", () => {
 
         // Check the row
         await checkEquipmentRow(page, 0, PLAYWRIGHT_EQUIPMENT[1]);
+    });
+});
+
+test.describe("Equipment Filtering and Sorting", () => {
+    // Test filters for the equipment table
+    test("should filter equipment table", async ({ page }) => {
+        // Create two new equipment rows to ensure filters will have at least two rows
+        await createEquipment(page, PLAYWRIGHT_EQUIPMENT[0]);
+        await checkEquipmentRow(page, 0, PLAYWRIGHT_EQUIPMENT[0]);
+
+        await createEquipment(page, PLAYWRIGHT_EQUIPMENT[1]);
+        await checkEquipmentRow(page, 0, PLAYWRIGHT_EQUIPMENT[1]);
+    
+        // Check the filters
+
+        // Id
+        await checkSingleStringFilter(page, "equipment-table-header-id", "0");
+
+        // Name
+        await checkSingleStringFilter(page, "equipment-table-header-name", "Assembler");
+
+        // Status
+        await checkSingleStringFilter(page, "equipment-table-header-status", "Down");
+
+        // Serial Number
+        await checkSingleStringFilter(page, "equipment-table-header-serialNumber", "246");
+
+        // Model
+        await checkSingleStringFilter(page, "equipment-table-header-model", "Mk 3");
+
+        // Department
+        await checkSingleStringFilter(page, "equipment-table-header-department", "Assembly");
+
+        // Location
+        await checkSingleStringFilter(page, "equipment-table-header-location", "Site 4");
+
+        // Date
+
+        const checkDate = "2024-12-21";
+        const dateHeader = page.getByTestId("equipment-table-header-installDate");
+
+        // Check the beginning date filter
+        await dateHeader.getByTestId("date-1").fill(checkDate);
+        const afterDate = await page.getByTestId("equipment-row").nth(0).getByTestId("installDate").textContent();
+        expect(checkDate <= new Date(afterDate as string).toISOString().substring(0, 10)).toBeTruthy();
+
+        await dateHeader.getByTestId("date-1").fill("");
+
+        // Check the end date filter
+        await dateHeader.getByTestId("date-2").fill(checkDate);
+        const beforeDate = await page.getByTestId("equipment-row").nth(0).getByTestId("installDate").textContent();
+        expect(new Date(beforeDate as string).toISOString().substring(0, 10) <= checkDate).toBeTruthy();
     });
 });
