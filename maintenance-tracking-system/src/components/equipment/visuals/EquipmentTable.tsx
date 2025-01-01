@@ -15,7 +15,7 @@ import clsx from 'clsx';
 import { useState, useMemo, useEffect, Dispatch } from 'react';
 import IndeterminateCheckbox from '@/components/generics/input/IndeterminateCheckbox';
 import TableFilter from '@/components/generics/filters/TableFilter';
-import dateFilter from '@/components/generics/filters/DateFilter';
+import dateFilter from '@/lib/filters/DateFilter';
 
 
 interface ComponentProps {
@@ -38,35 +38,35 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
 
     const columns = useMemo<ColumnDef<Equipment>[]> (() => [
         {
-            id: 'select',
-            size: 0,
-            header: ({ table }) => (
-                <IndeterminateCheckbox
-                    indeterminate={table.getIsSomeRowsSelected()}
-                    rest={{
-                        checked: table.getIsAllRowsSelected(),
-                        onChange: table.getToggleAllRowsSelectedHandler(),
-                    }}
-                />
-            ),
-            cell: ({ row }) => (
-                <div className='flex justify-center'>
-                   <IndeterminateCheckbox
-                        indeterminate={row.getIsSomeSelected()}
-                        rest={{
-                            checked: row.getIsSelected(),
-                            disabled: !row.getCanSelect(),
-                            onChange: row.getToggleSelectedHandler(),
-                        }}
-                    /> 
-                </div>
-                
-            ),
-        },
-        {
             id: 'data',
-            header: 'Equipment',
+            header: () => <div className="font-bold text-2xl">Equipment</div>,
             columns: [
+                {
+                    id: 'select',
+                    size: 0,
+                    header: ({ table }) => (
+                        <IndeterminateCheckbox
+                            indeterminate={table.getIsSomeRowsSelected()}
+                            rest={{
+                                checked: table.getIsAllRowsSelected(),
+                                onChange: table.getToggleAllRowsSelectedHandler(),
+                            }}
+                        />
+                    ),
+                    cell: ({ row }) => (
+                        <div className='flex justify-center'>
+                        <IndeterminateCheckbox
+                                indeterminate={row.getIsSomeSelected()}
+                                rest={{
+                                    checked: row.getIsSelected(),
+                                    disabled: !row.getCanSelect(),
+                                    onChange: row.getToggleSelectedHandler(),
+                                }}
+                            /> 
+                        </div>
+                        
+                    ),
+                },
                 {
                     accessorKey: 'id',
                     header: 'Id',
