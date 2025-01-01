@@ -1,25 +1,24 @@
 "use client";
 
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import EquipmentTable from "./EquipmentTable";
 import { RowSelectionState } from "@tanstack/react-table";
 import EquipmentStatusUpdateButton from "@/components/equipment/buttons/EquipmentStatusUpdateButton";
-import EquipmentCreateForm from "../forms/EquipmentFullForm";
 import EquipmentCreateButton from "@/components/equipment/buttons/EquipmentCreateButton";
 import EquipmentEditOneButton from "../buttons/EquipmentEditOneButton";
 
 interface ComponentProps {
-    initialData: Equipment[];
+    data: Equipment[];
+    setData: Dispatch<Equipment[]>;
 }
 
-const EquipmentTableManager: React.FC<ComponentProps> = ({ initialData }) => {
-    const [data, setData] = useState<Equipment[]>(initialData);
+const EquipmentTableManager: React.FC<ComponentProps> = ({ data, setData }) => {
     const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 
     return (
-        <div className="flex flex-col p-2 gap-2">
-            <div className="flex gap-2">
+        <div className="flex flex-col gap-2">
+            <div className="flex gap-2 mt-2 ml-2">
                 <EquipmentStatusUpdateButton
                     className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
                     allRows={data}
