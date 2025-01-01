@@ -1,9 +1,4 @@
-import { 
-    MaintenanceRecord,
-    MaintenanceRecordPriority,
-    MaintenanceRecordStatus,
-    MaintenanceRecordType,
-} from "@/lib/maintenance-records/MaintenanceRecordInterface";
+import { MaintenanceRecord } from "@/lib/maintenance-records/MaintenanceRecordInterface";
 
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
 
@@ -50,38 +45,38 @@ export const EXAMPLE_EQUIPMENT: Equipment[] = [
     }
 ] as const;
 
-export const exampleMaintenanceRecord: MaintenanceRecord[] = [
+export const EXAMPLE_MAINTENANCE_RECORD: MaintenanceRecord[] = [
     {
         id: "0",
         equipmentId: "1",
         date: new Date("2024-12-03"),
-        type: MaintenanceRecordType.Preventive,
+        type: "Preventive",
         technician: "Steve",
         hoursSpent: 1,
         description: "Check on arm 1 of machine.",
-        priority: MaintenanceRecordPriority.Low,
-        completionStatus: MaintenanceRecordStatus.Complete,
+        priority: "Low",
+        completionStatus: "Complete",
     },
     {
         id: "1",
         equipmentId: "0",
         date: new Date("2024-12-04"),
-        type: MaintenanceRecordType.Emergency,
+        type: "Emergency",
         technician: "Joe",
         hoursSpent: 4,
         description: "Malfunction on welding arm 3.",
-        priority: MaintenanceRecordPriority.High,
-        completionStatus: MaintenanceRecordStatus.Pending_Parts,
+        priority: "High",
+        completionStatus: "Pending Parts",
     },
     {
         id: "2",
         equipmentId: "2",
         date: new Date("2024-12-05"),
-        type: MaintenanceRecordType.Repair,
+        type: "Repair",
         technician: "Allen",
         hoursSpent: 2,
         description: "Repair on packing arm 2.",
-        priority: MaintenanceRecordPriority.Medium,
-        completionStatus: MaintenanceRecordStatus.Incomplete,
+        priority: "Medium",
+        completionStatus: "Incomplete",
     }
 ]
