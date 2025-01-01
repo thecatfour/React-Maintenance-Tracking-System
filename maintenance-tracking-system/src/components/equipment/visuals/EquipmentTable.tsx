@@ -1,6 +1,6 @@
 "use client";
 
-import { Equipment } from '@/lib/equipment/EquipmentInterface';
+import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import {
     ColumnDef,
     flexRender,
@@ -10,12 +10,12 @@ import {
     RowSelectionState,
     SortingState,
     useReactTable,
-} from '@tanstack/react-table';
-import clsx from 'clsx';
-import { useState, useMemo, useEffect, Dispatch } from 'react';
-import IndeterminateCheckbox from '@/components/generics/input/IndeterminateCheckbox';
-import TableFilter from '@/components/generics/filters/TableFilter';
-import dateFilter from '@/lib/filters/DateFilter';
+} from "@tanstack/react-table";
+import clsx from "clsx";
+import { useState, useMemo, useEffect, Dispatch } from "react";
+import IndeterminateCheckbox from "@/components/generics/input/IndeterminateCheckbox";
+import TableFilter from "@/components/generics/filters/TableFilter";
+import dateFilter from "@/lib/filters/DateFilter";
 
 
 interface ComponentProps {
@@ -36,13 +36,13 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
         setData(equipmentArray);
     }, [equipmentArray])
 
-    const columns = useMemo<ColumnDef<Equipment>[]> (() => [
+    const columns = useMemo<ColumnDef<Equipment>[]>(() => [
         {
-            id: 'data',
+            id: "data",
             header: () => <div className="font-bold text-2xl">Equipment</div>,
             columns: [
                 {
-                    id: 'select',
+                    id: "select",
                     size: 0,
                     header: ({ table }) => (
                         <IndeterminateCheckbox
@@ -54,9 +54,8 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                         />
                     ),
                     cell: ({ row }) => (
-                        <div className='flex justify-center'>
-                        <IndeterminateCheckbox
-                                indeterminate={row.getIsSomeSelected()}
+                        <div className="flex justify-center">
+                            <IndeterminateCheckbox
                                 rest={{
                                     checked: row.getIsSelected(),
                                     disabled: !row.getCanSelect(),
@@ -68,43 +67,43 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                     ),
                 },
                 {
-                    accessorKey: 'id',
-                    header: 'Id',
+                    accessorKey: "id",
+                    header: "Id",
                     size: 100,
                 },
                 {
-                    accessorKey: 'name',
-                    header: 'Name',
+                    accessorKey: "name",
+                    header: "Name",
                     size: 250,
                 },
                 {
-                    accessorKey: 'status',
-                    header: 'Status',
+                    accessorKey: "status",
+                    header: "Status",
                     size: 100,
                 },
                 {
-                    accessorKey: 'serialNumber',    
-                    header: 'Serial Number',
+                    accessorKey: "serialNumber",    
+                    header: "Serial Number",
                     size: 175,
                 },
                 {
-                    accessorKey: 'model',
-                    header: 'Model',
+                    accessorKey: "model",
+                    header: "Model",
                     size: 150,
                 },
                 {
-                    accessorKey: 'department',
-                    header: 'Department',
+                    accessorKey: "department",
+                    header: "Department",
                     size: 150,
                 },
                 {
-                    accessorKey: 'location',
-                    header: 'Location',
+                    accessorKey: "location",
+                    header: "Location",
                     size: 200,
                 },
                 {
-                    accessorKey: 'installDate',
-                    header: 'Installation Date',
+                    accessorKey: "installDate",
+                    header: "Installation Date",
                     size: 200,
                     filterFn: dateFilter,
                     cell: ({ row }) => {return <>{row.original.installDate.toUTCString()}</>}
@@ -129,20 +128,20 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
         },
     });
 
-    const EquipmentStatusBackground = ( equipStatus: string ) => {
+    function equipmentStatusBackground(equipStatus: string) {
         return clsx(
             {
-                'bg-green-800':     equipStatus == 'Operational',
-                'bg-red-800':       equipStatus == 'Down',
-                'bg-yellow-700':    equipStatus == 'Maintenance',
-                'bg-gray-600':      equipStatus == 'Retired',
+                "bg-green-800":     equipStatus == "Operational",
+                "bg-red-800":       equipStatus == "Down",
+                "bg-yellow-700":    equipStatus == "Maintenance",
+                "bg-gray-600":      equipStatus == "Retired",
             }
         );
     };
 
     return (
         <>
-            <table style={{ minWidth: table.getCenterTotalSize(), width: '100%' }}>
+            <table style={{ minWidth: table.getCenterTotalSize(), width: "100%" }}>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
@@ -159,29 +158,29 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                                     {header.isPlaceholder ? null : (
                                         <>
                                             <div
-                                            className={
-                                                header.column.getCanSort()
-                                                ? 'cursor-pointer select-none'
-                                                : ''
-                                            }
-                                            onClick={header.column.getToggleSortingHandler()}
-                                            title={
-                                                header.column.getCanSort()
-                                                ? header.column.getNextSortingOrder() === 'asc'
-                                                ? 'Sort ascending'
-                                                : header.column.getNextSortingOrder() === 'desc'
-                                                    ? 'Sort descending'
-                                                    : 'Clear sort'
-                                                : undefined   
-                                            }
+                                                className={
+                                                    header.column.getCanSort()
+                                                    ? "cursor-pointer select-none"
+                                                    : ''
+                                                }
+                                                onClick={header.column.getToggleSortingHandler()}
+                                                title={
+                                                    header.column.getCanSort()
+                                                    ? header.column.getNextSortingOrder() === "asc"
+                                                        ? "Sort ascending"
+                                                        : header.column.getNextSortingOrder() === "desc"
+                                                            ? "Sort descending"
+                                                            : "Clear sort"
+                                                    : undefined   
+                                                }
                                             >
                                                 {flexRender(
                                                     header.column.columnDef.header,
                                                     header.getContext()
                                                 )}
                                                 {{
-                                                    asc: ' 🔼',
-                                                    desc: ' 🔽',
+                                                    asc: " 🔼",
+                                                    desc: " 🔽",
                                                 }[header.column.getIsSorted() as string] ?? null}
                                             </div>
                                             {header.column.getCanFilter() ? (
@@ -204,7 +203,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                         <tr
                             data-testid="equipment-row"
                             key={row.id}
-                            className={EquipmentStatusBackground(row.getValue('status'))}
+                            className={equipmentStatusBackground(row.getValue("status"))}
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
