@@ -1,30 +1,30 @@
-export enum MaintenanceRecordType {
-    Preventive = 'Preventive',
-    Repair = 'Repair',
-    Emergency = 'Emergency',
-}
+export const MaintenanceRecordType = [
+    "Preventive",
+    "Repair",
+    "Emergency",
+] as const;
 
-export enum MaintenanceRecordPriority {
-    Low = 'Low',
-    Medium = 'Medium',
-    High = 'High',
-}
+export const MaintenanceRecordPriority = [
+    "Low",
+    "Medium",
+    "High",
+] as const;
 
-export enum MaintenanceRecordStatus {
-    Complete = 'Complete',
-    Incomplete = 'Incomplete',
-    Pending_Parts = 'Pending Parts',
-}
+export const MaintenanceRecordStatus = [
+    "Complete",
+    "Incomplete",
+    "Pending Parts",
+] as const;
 
 export interface MaintenanceRecord {
     id: string;
     equipmentId: string;
     date: Date;
-    type: MaintenanceRecordType;
+    type: 'Preventive' | 'Repair' | 'Emergency';
     technician: string;
     hoursSpent: number;
     description: string;
     partsReplaced?: string[];
-    priority: MaintenanceRecordPriority;
-    completionStatus: MaintenanceRecordStatus;
+    priority: 'Low' | 'Medium' | 'High';
+    completionStatus: 'Complete' | 'Incomplete' | 'Pending Parts';
 }
