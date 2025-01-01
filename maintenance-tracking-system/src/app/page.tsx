@@ -6,6 +6,8 @@ import Navbar from "@/components/generics/visuals/Navbar";
 import { useState } from "react";
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import { MaintenanceRecord } from "@/lib/maintenance-records/MaintenanceRecordInterface";
+import MaintenanceRecordTable from "@/components/maintenance-records/visuals/MaintenanceRecordTable";
+import { RowSelectionState } from "@tanstack/react-table";
 
 export default function Home() {
     const [equipment, setEquipment] = useState<Equipment[]>(EXAMPLE_EQUIPMENT);
@@ -14,6 +16,8 @@ export default function Home() {
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [isEquipmentOpen, setIsEquipmentOpen] = useState(false);
     const [isMaintenananceRecordsOpen, setIsMaintenanceRecordsOpen] = useState(false);
+
+    const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 
     function focusDashboard() {
         setIsEquipmentOpen(false);
@@ -45,6 +49,13 @@ export default function Home() {
                     data={equipment}
                     setData={setEquipment}
                 />  
+            }
+            {isMaintenananceRecordsOpen &&
+                <MaintenanceRecordTable
+                    equipmentArray={equipment}
+                    mRecordsArray={mRecords}
+                    setSelectedRows={setSelectedRows}
+                />
             }
         </div>  
     );
