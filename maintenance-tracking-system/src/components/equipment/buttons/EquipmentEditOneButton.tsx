@@ -24,7 +24,6 @@ const EquipmentEditOneButton: React.FC<ComponentProps> = ({ className, allRows, 
         if (canOpen) {
             setIsOpen(true);
         } else {
-            console.log("warm")
             setIsWarningOpen(true);
         }
     }
