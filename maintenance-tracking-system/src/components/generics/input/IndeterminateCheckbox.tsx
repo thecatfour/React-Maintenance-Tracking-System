@@ -10,7 +10,7 @@ const IndeterminateCheckbox: React.FC<ComponentProps> = ({ indeterminate, classN
     const ref = useRef<HTMLInputElement>(null!);
 
     useEffect(() => {
-        if (typeof indeterminate === 'boolean') {
+        if (typeof indeterminate === "boolean") {
             ref.current.indeterminate = !rest?.checked && indeterminate;
         }
     }, [ref, indeterminate])
@@ -19,7 +19,7 @@ const IndeterminateCheckbox: React.FC<ComponentProps> = ({ indeterminate, classN
         <input
             type="checkbox"
             ref={ref}
-            className={className + ' cursor-pointer'}
+            className={className + " cursor-pointer"}
             {...rest}
         />
     );
