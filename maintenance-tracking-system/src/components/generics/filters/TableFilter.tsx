@@ -10,7 +10,7 @@ interface ComponentProps {
 const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
     const checkValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
 
-    if (typeof checkValue == "string") {
+    if (typeof checkValue === "string") {
         return (
             <input
                 data-testid="string-1"
