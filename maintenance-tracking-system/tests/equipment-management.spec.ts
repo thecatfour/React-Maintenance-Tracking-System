@@ -85,6 +85,7 @@ async function checkSingleStringFilter(page: Page, headerId: string, input: stri
 
 test.beforeEach(async ({ page }) => {
     await page.goto("http://localhost:3000");
+    await page.getByTestId("navbar-Equipment").click();
 });
 
 test.describe("Equipment Modifications", () => {
