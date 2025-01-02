@@ -4,13 +4,12 @@ const inputClass = "bg-white text-black mb-2 w-full";
 
 interface ComponentProps {
     column: Column<any, any>;
-    table: Table<any>;
 }
 
-const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
-    const checkValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
+const TableFilter: React.FC<ComponentProps> = ({ column }) => {
+    const { filterVariant, selectOptions } = column.columnDef.meta ?? {};
 
-    if (typeof checkValue === "string") {
+    if (filterVariant === undefined || filterVariant === "text" ) {
         return (
             <input
                 data-testid="string-1"
@@ -21,9 +20,29 @@ const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
                 className={inputClass}
             />
         );
-    }
-
-    if (checkValue instanceof Date) {
+    } else if (filterVariant === "number-range") {
+        console.log(column.getFilterValue() as number[])
+        return (
+            <div className="flex flex-row gap-4">
+                <input
+                    data-testid="number-1"
+                    type="number"
+                    placeholder="Min"
+                    min={0}
+                    onChange={(e) => column.setFilterValue((old: any) => [e.target.value, old?.[1]])}
+                    className={inputClass}
+                />
+                <input
+                    data-testid="number-2"
+                    type="number"
+                    placeholder="Max"
+                    min={(column.getFilterValue() as string[])?.[0] == '' ? 0 : (column.getFilterValue() as string[])?.[0]}
+                    onChange={(e) => column.setFilterValue((old: any) => [old?.[0], e.target.value])}
+                    className={inputClass}
+                />
+            </div>
+        )
+    } else if (filterVariant === "date-range") {
         return (
             <div className="flex flex-row gap-10">
                 <input
@@ -40,6 +59,22 @@ const TableFilter: React.FC<ComponentProps> = ({ column, table }) => {
                     className={inputClass}
                 />
             </div>
+        )
+    } else if (filterVariant === "select") {
+        return (
+            <select
+                onChange={(e) => column.setFilterValue(e.target.value)}
+                value={column.getFilterValue()?.toString()}
+                className={`${inputClass} min-w-[125px]`}
+            >
+                <option value="">All</option>
+
+                {selectOptions?.map((value) => (
+                    <option key={value} value={value}>
+                        {value}
+                    </option>
+                ))}
+            </select>
         )
     }
 

@@ -1,12 +1,13 @@
 "use client";
 
-import { Equipment } from "@/lib/equipment/EquipmentInterface";
+import { Equipment, EquipmentDepartment, EquipmentStatus } from "@/lib/equipment/EquipmentInterface";
 import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
     getSortedRowModel,
+    RowData,
     RowSelectionState,
     SortingState,
     useReactTable,
@@ -17,6 +18,13 @@ import IndeterminateCheckbox from "@/components/generics/input/IndeterminateChec
 import TableFilter from "@/components/generics/filters/TableFilter";
 import dateFilter from "@/lib/filters/DateFilter";
 
+
+declare module "@tanstack/react-table" {
+    interface ColumnMeta<TData extends RowData, TValue> {
+        filterVariant?: "text" | "date-range" | "number-range" | "select",
+        selectOptions?: string[],
+    }
+}
 
 interface ComponentProps {
     equipmentArray: Equipment[];
@@ -80,6 +88,10 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                     accessorKey: "status",
                     header: "Status",
                     size: 100,
+                    meta: {
+                        filterVariant: "select",
+                        selectOptions: EquipmentStatus,
+                    }
                 },
                 {
                     accessorKey: "serialNumber",    
@@ -95,6 +107,10 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                     accessorKey: "department",
                     header: "Department",
                     size: 150,
+                    meta: {
+                        filterVariant: "select",
+                        selectOptions: EquipmentDepartment,
+                    }
                 },
                 {
                     accessorKey: "location",
@@ -106,7 +122,10 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                     header: "Installation Date",
                     size: 200,
                     filterFn: dateFilter,
-                    cell: ({ row }) => {return <>{row.original.installDate.toUTCString()}</>}
+                    meta: {
+                        filterVariant: "date-range",
+                    },
+                    cell: ({ row }) => (<>{row.original.installDate.toUTCString()}</>)
                 },
             ],
         }
@@ -187,7 +206,6 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                                                 <div>
                                                     <TableFilter 
                                                         column={header.column}
-                                                        table={table}
                                                     />
                                                 </div>
                                             ) : null }
