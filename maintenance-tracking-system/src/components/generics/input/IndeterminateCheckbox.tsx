@@ -16,12 +16,14 @@ const IndeterminateCheckbox: React.FC<ComponentProps> = ({ indeterminate, classN
     }, [ref, indeterminate])
     
     return (
-        <input
-            type="checkbox"
-            ref={ref}
-            className={className + " cursor-pointer"}
-            {...rest}
-        />
+        <div className="flex justify-center">
+            <input
+                type="checkbox"
+                ref={ref}
+                className={className + " cursor-pointer"}
+                {...rest}
+            /> 
+        </div>
     );
 }
 

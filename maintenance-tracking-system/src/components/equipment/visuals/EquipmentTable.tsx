@@ -62,16 +62,13 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                         />
                     ),
                     cell: ({ row }) => (
-                        <div className="flex justify-center">
-                            <IndeterminateCheckbox
-                                rest={{
-                                    checked: row.getIsSelected(),
-                                    disabled: !row.getCanSelect(),
-                                    onChange: row.getToggleSelectedHandler(),
-                                }}
-                            /> 
-                        </div>
-                        
+                        <IndeterminateCheckbox
+                            rest={{
+                                checked: row.getIsSelected(),
+                                disabled: !row.getCanSelect(),
+                                onChange: row.getToggleSelectedHandler(),
+                            }}
+                        />                
                     ),
                 },
                 {
