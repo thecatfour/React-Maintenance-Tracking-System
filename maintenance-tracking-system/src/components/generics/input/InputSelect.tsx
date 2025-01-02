@@ -17,7 +17,7 @@ const InputSelect: React.FC<ComponentProps> = ({ display, name, choices }) => {
             <select
                 aria-label={name}
                 {...register(name)}
-                className="bg-white text-black"
+                className="bg-white text-black hover:cursor-pointer"
             >
                 {choices.map((option) => (
                     <option key={option}>
