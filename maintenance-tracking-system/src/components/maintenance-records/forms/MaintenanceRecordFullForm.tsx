@@ -6,8 +6,8 @@ import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import { MaintenanceRecord, MaintenanceRecordPriority, MaintenanceRecordStatus, MaintenanceRecordType } from "@/lib/maintenance-records/MaintenanceRecordInterface";
 import { MaintenanceRecordSchemaType, mRecordSchema } from "@/lib/maintenance-records/MaintenanceRecordValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { Dispatch, useEffect } from "react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 
 interface ComponentProps {
     allEquipment: Equipment[];
@@ -31,7 +31,14 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
             priority: selectedRow?.priority,
             completionStatus: selectedRow?.completionStatus,
         }
-    })
+    });
+
+    const { control } = methods;
+
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "partsReplaced" as never,
+    });
 
     const onSubmit = (data: MaintenanceRecordSchemaType) => {
         // If there was a database, the id would come from it rather than being created here
@@ -59,6 +66,10 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
         onClose(false);
     }
 
+    useEffect(() => {
+        console.log(methods.formState.errors?.partsReplaced)
+    }, [methods.formState.errors?.partsReplaced])
+
     return (
         <FormProvider {...methods}>
             <form
@@ -76,10 +87,57 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
                     )}
                 </div>
 
+                <div className="flex flex-col gap-2 w-full">
+                    <div>
+                        Parts Replaced (Optional)
+                    </div>
+                    {fields?.length > 0 &&
+                    <div className="flex flex-col gap-2 w-full mt-[-5px]">
+                        {fields.map((item, index) => (
+                            <div key={item.id} className="flex gap-2">
+                                {methods.formState.errors?.partsReplaced?.[index] != null &&
+                                    <div className="text-red-400 min-w-fit">
+                                        {`${methods.formState.errors?.partsReplaced?.[index].message}`}
+                                    </div>
+                                } 
+                                <input
+                                    key={item.id}
+                                    data-testid={`${item}-${index}`}
+                                    {...methods.register(`partsReplaced.${index}`, {required: false})}
+                                    className="pl-1 text-black w-full"
+                                    placeholder="Enter Part Replaced..."
+                                />
+                                <button 
+                                    type="button"
+                                    data-testid={`${item}-${index}-delete`}
+                                    onClick={() => remove(index)}
+                                    className="bg-red-800 hover:bg-red-800/75 px-1 rounded-lg w-fit"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                    }
+                    <div>
+                        <button
+                            type="button"
+                            data-testid="add-part-button"
+                            onClick={() =>{
+                                append("");
+                            }}
+                            className="bg-green-800 hover:bg-green-800/75 px-1 rounded-lg"
+                        >
+                            Add New Part
+                        </button>
+                    </div>
+                </div>
+
                 <InputCombobox
-                    display="Equipment"
+                    placeholder="Equipment"
                     name="equipmentId"
                     allOptions={allEquipment}
+                    optionsKey="name"
                 />
 
                 <InputWithErrorMessage
