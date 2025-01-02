@@ -21,7 +21,6 @@ const TableFilter: React.FC<ComponentProps> = ({ column }) => {
             />
         );
     } else if (filterVariant === "number-range") {
-        console.log(column.getFilterValue() as number[])
         return (
             <div className="flex flex-row gap-4">
                 <input
