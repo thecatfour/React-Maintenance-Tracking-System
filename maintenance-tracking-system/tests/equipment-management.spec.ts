@@ -68,15 +68,32 @@ async function createEquipment(page: Page, newEquipment: Equipment) {
 }
 
 // Helper function for using a single string filter in a table
-async function checkSingleStringFilter(page: Page, headerId: string, input: string) {
-    await page.getByTestId(headerId).getByTestId("string-1").fill(input);
+async function checkSingleStringFilter(page: Page, headerId: string, input: string, isSelect?: boolean) {
+    // Change depending on if the filter is a select filter
 
-    // Use headerId to get the correct column to check
-    const columnName = headerId.substring(headerId.lastIndexOf('-')+1, headerId.length)
+    if (isSelect) {
+        // Do this if the input is select
 
-    await expect(page.getByTestId("equipment-row").nth(0).getByTestId(columnName)).toContainText(input);
-    
-    await page.getByTestId(headerId).getByTestId("string-1").fill("");
+        await page.getByTestId(headerId).getByTestId("select-1").selectOption(input);
+
+        // Use headerId to get the correct column to check
+        const columnName = headerId.substring(headerId.lastIndexOf('-')+1, headerId.length)
+
+        await expect(page.getByTestId("equipment-row").nth(0).getByTestId(columnName)).toContainText(input);
+        
+        await page.getByTestId(headerId).getByTestId("select-1").selectOption("All");
+    } else {
+        // Do this if the input is just an input string
+
+        await page.getByTestId(headerId).getByTestId("string-1").fill(input);
+
+        // Use headerId to get the correct column to check
+        const columnName = headerId.substring(headerId.lastIndexOf('-')+1, headerId.length)
+
+        await expect(page.getByTestId("equipment-row").nth(0).getByTestId(columnName)).toContainText(input);
+        
+        await page.getByTestId(headerId).getByTestId("string-1").fill("");
+    }
 }
 
 /*
@@ -242,7 +259,7 @@ test.describe("Equipment Filtering and Sorting", () => {
         await checkSingleStringFilter(page, "equipment-table-header-name", "Assembler");
 
         // Status
-        await checkSingleStringFilter(page, "equipment-table-header-status", "Down");
+        await checkSingleStringFilter(page, "equipment-table-header-status", "Down", true);
 
         // Serial Number
         await checkSingleStringFilter(page, "equipment-table-header-serialNumber", "246");
@@ -251,7 +268,7 @@ test.describe("Equipment Filtering and Sorting", () => {
         await checkSingleStringFilter(page, "equipment-table-header-model", "Mk 3");
 
         // Department
-        await checkSingleStringFilter(page, "equipment-table-header-department", "Assembly");
+        await checkSingleStringFilter(page, "equipment-table-header-department", "Assembly", true);
 
         // Location
         await checkSingleStringFilter(page, "equipment-table-header-location", "Site 4");

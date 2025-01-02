@@ -66,6 +66,7 @@ const TableFilter: React.FC<ComponentProps> = ({ column }) => {
                 onChange={(e) => column.setFilterValue(e.target.value)}
                 value={column.getFilterValue()?.toString()}
                 className={`${inputClass} min-w-[125px]`}
+                data-testid="select-1"
             >
                 <option value="">All</option>
 
