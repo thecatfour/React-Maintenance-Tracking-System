@@ -1,15 +1,14 @@
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
-import clsx from 'clsx';
-import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 interface ComponentProps {
     allOptions: any[];
-    display: string;
+    optionsKey: string;
+    placeholder: string;
     name: string;
 }
 
-const InputCombobox: React.FC<ComponentProps> = ({ allOptions, display, name }) => {
+const InputCombobox: React.FC<ComponentProps> = ({ allOptions, placeholder, name, optionsKey }) => {
     const { register, formState: { errors } } = useFormContext();
 
     const query = useWatch({ name: name });
@@ -18,13 +17,13 @@ const InputCombobox: React.FC<ComponentProps> = ({ allOptions, display, name }) 
         query == null
         ? allOptions
         : allOptions.filter((option) => {
-            return option.name.toLowerCase().includes(query.toLowerCase())
+            return option?.[optionsKey].toLowerCase().includes(query.toLowerCase())
         })
 
     return (
         <div>
             <div className="flex justify-between">
-                {display}
+                {placeholder}
                 {errors?.[name] != null &&
                     <p className="text-red-400">
                         {`${errors?.[name]?.message}`}
@@ -36,7 +35,7 @@ const InputCombobox: React.FC<ComponentProps> = ({ allOptions, display, name }) 
                 <div className="relative">
                     <ComboboxInput
                         className="w-full pl-1 pr-8 text-black"
-                        placeholder={`Enter ${display}...`}
+                        placeholder={`Enter ${placeholder}...`}
                         {...register(name)}
                     />
                     <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5 text-black">
@@ -51,11 +50,11 @@ const InputCombobox: React.FC<ComponentProps> = ({ allOptions, display, name }) 
                 >
                     {filteredOptions.map((option) => (
                         <ComboboxOption
-                            key={option.name}
-                            value={option.name}
+                            key={option?.[optionsKey]}
+                            value={option?.[optionsKey]}
                             className="group flex cursor-default pl-1 py-1 items-center select-none data-[focus]:bg-zinc-500"
                         >
-                            <div className="text-black">{option.name}</div>
+                            <div className="text-black">{option?.[optionsKey]}</div>
                         </ComboboxOption>
                     ))}
                 </ComboboxOptions>
