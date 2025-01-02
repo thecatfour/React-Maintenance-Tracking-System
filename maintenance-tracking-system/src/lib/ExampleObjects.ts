@@ -55,6 +55,7 @@ export const EXAMPLE_MAINTENANCE_RECORD: MaintenanceRecord[] = [
         hoursSpent: 1,
         description: "Check on arm 1 of machine.",
         priority: "Low",
+        partsReplaced: undefined,
         completionStatus: "Complete",
     },
     {
@@ -66,6 +67,7 @@ export const EXAMPLE_MAINTENANCE_RECORD: MaintenanceRecord[] = [
         hoursSpent: 4,
         description: "Malfunction on welding arm 3.",
         priority: "High",
+        partsReplaced: ["Gears 1, 2, 3", "Main board", "Green wire"],
         completionStatus: "Pending Parts",
     },
     {
@@ -77,6 +79,19 @@ export const EXAMPLE_MAINTENANCE_RECORD: MaintenanceRecord[] = [
         hoursSpent: 2,
         description: "Repair on packing arm 2.",
         priority: "Medium",
+        partsReplaced: ["Gears 1, 2"],
         completionStatus: "Incomplete",
-    }
+    },
+    {
+        id: "3",
+        equipmentId: "0",
+        date: new Date("2024-12-07"),
+        type: "Repair",
+        technician: "Joe",
+        hoursSpent: 2,
+        description: "Check on welding arm 3.",
+        priority: "Low",
+        partsReplaced: undefined,
+        completionStatus: "Incomplete",
+    },
 ]
