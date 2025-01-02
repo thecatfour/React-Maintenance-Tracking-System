@@ -8,6 +8,7 @@ import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import { MaintenanceRecord } from "@/lib/maintenance-records/MaintenanceRecordInterface";
 import MaintenanceRecordTable from "@/components/maintenance-records/visuals/MaintenanceRecordTable";
 import { RowSelectionState } from "@tanstack/react-table";
+import MaintenanceRecordTableManager from "@/components/maintenance-records/visuals/MaintenanceRecordTableManager";
 
 export default function Home() {
     const [equipment, setEquipment] = useState<Equipment[]>(EXAMPLE_EQUIPMENT);
@@ -51,10 +52,10 @@ export default function Home() {
                 />  
             }
             {isMaintenananceRecordsOpen &&
-                <MaintenanceRecordTable
-                    equipmentArray={equipment}
-                    mRecordsArray={mRecords}
-                    setSelectedRows={setSelectedRows}
+                <MaintenanceRecordTableManager
+                    equipment={equipment}
+                    data={mRecords}
+                    setData={setMRecords}
                 />
             }
         </div>  
