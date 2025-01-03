@@ -66,10 +66,6 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
         onClose(false);
     }
 
-    useEffect(() => {
-        console.log(methods.formState.errors?.partsReplaced)
-    }, [methods.formState.errors?.partsReplaced])
-
     return (
         <FormProvider {...methods}>
             <form
@@ -85,52 +81,6 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
                     (
                         <>Edit Maintenance Record {selectedRow.id}</>
                     )}
-                </div>
-
-                <div className="flex flex-col gap-2 w-full">
-                    <div>
-                        Parts Replaced (Optional)
-                    </div>
-                    {fields?.length > 0 &&
-                    <div className="flex flex-col gap-2 w-full mt-[-5px]">
-                        {fields.map((item, index) => (
-                            <div key={item.id} className="flex gap-2">
-                                {methods.formState.errors?.partsReplaced?.[index] != null &&
-                                    <div className="text-red-400 min-w-fit">
-                                        {`${methods.formState.errors?.partsReplaced?.[index].message}`}
-                                    </div>
-                                } 
-                                <input
-                                    key={item.id}
-                                    data-testid={`${item}-${index}`}
-                                    {...methods.register(`partsReplaced.${index}`, {required: false})}
-                                    className="pl-1 text-black w-full"
-                                    placeholder="Enter Part Replaced..."
-                                />
-                                <button 
-                                    type="button"
-                                    data-testid={`${item}-${index}-delete`}
-                                    onClick={() => remove(index)}
-                                    className="bg-red-800 hover:bg-red-800/75 px-1 rounded-lg w-fit"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                    }
-                    <div>
-                        <button
-                            type="button"
-                            data-testid="add-part-button"
-                            onClick={() =>{
-                                append("");
-                            }}
-                            className="bg-green-800 hover:bg-green-800/75 px-1 rounded-lg"
-                        >
-                            Add New Part
-                        </button>
-                    </div>
                 </div>
 
                 <InputCombobox
@@ -177,6 +127,52 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
                     placeholder="Hours Spent"
                     name="hoursSpent"
                 />
+
+<div className="flex flex-col gap-2 w-full">
+                    <div>
+                        Parts Replaced (Optional)
+                    </div>
+                    {fields?.length > 0 &&
+                    <div className="flex flex-col gap-2 w-full mt-[-5px]">
+                        {fields.map((item, index) => (
+                            <div key={item.id} className="flex gap-2">
+                                {methods.formState.errors?.partsReplaced?.[index] != null &&
+                                    <div className="text-red-400 min-w-fit">
+                                        {`${methods.formState.errors?.partsReplaced?.[index].message}`}
+                                    </div>
+                                } 
+                                <input
+                                    key={item.id}
+                                    aria-label={`partsReplaced-${index}`}
+                                    {...methods.register(`partsReplaced.${index}`, {required: false})}
+                                    className="pl-1 text-black w-full"
+                                    placeholder="Enter Part Replaced..."
+                                />
+                                <button 
+                                    type="button"
+                                    data-testid={`partsReplaced-${index}-delete`}
+                                    onClick={() => remove(index)}
+                                    className="bg-red-800 hover:bg-red-800/75 px-1 rounded-lg w-fit"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                    }
+                    <div>
+                        <button
+                            type="button"
+                            data-testid="partsReplaced-add"
+                            onClick={() =>{
+                                append("");
+                            }}
+                            className="bg-green-800 hover:bg-green-800/75 px-1 rounded-lg"
+                        >
+                            Add New Part
+                        </button>
+                    </div>
+                </div>
 
                 <InputWithErrorMessage
                     type="text"
