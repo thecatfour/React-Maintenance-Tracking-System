@@ -35,6 +35,7 @@ const InputCombobox: React.FC<ComponentProps> = ({ allOptions, placeholder, name
                 <div className="relative">
                     <ComboboxInput
                         className="w-full pl-1 pr-8 text-black"
+                        aria-label={name}
                         placeholder={`Enter ${placeholder}...`}
                         {...register(name)}
                     />
@@ -52,6 +53,7 @@ const InputCombobox: React.FC<ComponentProps> = ({ allOptions, placeholder, name
                         <ComboboxOption
                             key={option?.[optionsKey]}
                             value={option?.[optionsKey]}
+                            data-testid={option?.[optionsKey]}
                             className="group flex cursor-default pl-1 py-1 items-center select-none data-[focus]:bg-zinc-500"
                         >
                             <div className="text-black">{option?.[optionsKey]}</div>
