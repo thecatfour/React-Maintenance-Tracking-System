@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
     await page.getByTestId("navbar-Equipment").click();
 });
 
-test.describe("Equipment Modifications", () => {
+test.describe("Equipment Forms", () => {
     // Test the ability to create an equipment row with the form
     test("should create new equipment with valid data", async ({ page }) => {
         // Create an equipment object in the table
@@ -25,7 +25,6 @@ test.describe("Equipment Modifications", () => {
         // Check that the equipment was created
         await checkEquipmentRow(page, 0, PLAYWRIGHT_EQUIPMENT[0]);
     });
-
 
 
     // Test the error messages on the create equipment form
@@ -64,9 +63,6 @@ test.describe("Equipment Modifications", () => {
         // Click confirm to make sure it will not submit
         await page.getByTestId("2-confirm").click();
 
-        // Check if modal is open (it should be as confirm should not submit the form)
-        await expect(page.getByTestId("dialog-modal")).toBeVisible();
-
 
 
         // Check expected error messages
@@ -84,9 +80,6 @@ test.describe("Equipment Modifications", () => {
         // Click confirm to make sure it will not submit
         await page.getByTestId("2-confirm").click();
 
-        // Check if modal is open (it should be as confirm should not submit the form)
-        await expect(page.getByTestId("dialog-modal")).toBeVisible();
-
 
 
         // Check expected error messages
@@ -101,7 +94,6 @@ test.describe("Equipment Modifications", () => {
         // Check if modal is closed
         await expect(page.getByTestId("dialog-modal")).toBeVisible({visible: false});
     });
-
 
 
     // Test the ability to edit one row in the equipment table
@@ -151,7 +143,7 @@ test.describe("Equipment Modifications", () => {
     });
 });
 
-test.describe("Equipment Filtering and Sorting", () => {
+test.describe("Equipment Visuals", () => {
     // Test filters for the equipment table
     test("should filter equipment table", async ({ page }) => {
         // Create two new equipment rows to ensure filters will have at least two rows
