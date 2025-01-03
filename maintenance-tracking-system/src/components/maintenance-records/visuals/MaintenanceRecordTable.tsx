@@ -231,7 +231,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                                 <th
                                     key={header.id}
                                     colSpan={header.colSpan}
-                                    data-testid={`m-record-table-header-${header.id}`}
+                                    data-testid={`maintenance-record-table-header-${header.id}`}
                                     style={{
                                         width: header.getSize(),
                                         minWidth: header.getSize(),
@@ -301,7 +301,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
                         <tr
-                            data-testid="m-record-row"
+                            data-testid="maintenance-record-row"
                             key={row.id}
                             className={mRecordStatusBackground(row.getValue("completionStatus"))}
                         >
