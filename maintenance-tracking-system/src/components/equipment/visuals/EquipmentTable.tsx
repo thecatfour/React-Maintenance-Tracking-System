@@ -1,6 +1,6 @@
 "use client";
 
-import { Equipment, EquipmentDepartment, EquipmentStatus } from "@/lib/equipment/EquipmentInterface";
+import { Equipment, EquipmentDepartment, EquipmentStatus, EquipmentStatusColors } from "@/lib/equipment/EquipmentInterface";
 import {
     ColumnDef,
     flexRender,
@@ -12,7 +12,6 @@ import {
     SortingState,
     useReactTable,
 } from "@tanstack/react-table";
-import clsx from "clsx";
 import { useState, useMemo, useEffect, Dispatch } from "react";
 import IndeterminateCheckbox from "@/components/generics/input/IndeterminateCheckbox";
 import TableFilter from "@/components/generics/filters/TableFilter";
@@ -148,17 +147,6 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
         onSortingChange: setSorting,
     });
 
-    function equipmentStatusBackground(equipStatus: string) {
-        return clsx(
-            {
-                "bg-green-800":     equipStatus == "Operational",
-                "bg-red-800":       equipStatus == "Down",
-                "bg-yellow-700":    equipStatus == "Maintenance",
-                "bg-gray-600":      equipStatus == "Retired",
-            }
-        );
-    };
-
     return (
         <>
             <table style={{ minWidth: table.getCenterTotalSize(), width: "100%" }}>
@@ -222,7 +210,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                         <tr
                             data-testid="equipment-row"
                             key={row.id}
-                            className={equipmentStatusBackground(row.getValue("status"))}
+                            className={EquipmentStatusColors?.[row.getValue("status") as string]}
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
