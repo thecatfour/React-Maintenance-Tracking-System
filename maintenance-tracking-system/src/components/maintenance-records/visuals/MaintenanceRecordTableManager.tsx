@@ -9,12 +9,12 @@ import MaintenanceRecordCreateButton from "../buttons/MaintenanceRecordCreateBut
 import MaintenanceRecordEditButton from "../buttons/MaintenanceRecordEditButton";
 
 interface ComponentProps {
-    equipment: Equipment[];
+    equipmentArray: Equipment[];
     data: MaintenanceRecord[];
     setData: Dispatch<MaintenanceRecord[]>;
 }
 
-const MaintenanceRecordTableManager: React.FC<ComponentProps> = ({ equipment, data, setData }) => {
+const MaintenanceRecordTableManager: React.FC<ComponentProps> = ({ equipmentArray, data, setData }) => {
     const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 
     return (
@@ -24,19 +24,19 @@ const MaintenanceRecordTableManager: React.FC<ComponentProps> = ({ equipment, da
                     className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
                     allRows={data}
                     setRows={setData}
-                    equipmentArray={equipment}
+                    equipmentArray={equipmentArray}
                 />
 
                 <MaintenanceRecordEditButton
                     className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
                     allRows={data}
                     setRows={setData}
-                    equipmentArray={equipment} 
+                    equipmentArray={equipmentArray} 
                     selectedRows={selectedRows}                />
             </div>
 
             <MaintenanceRecordTable
-                equipmentArray={equipment}
+                equipmentArray={equipmentArray}
                 mRecordsArray={data}
                 setSelectedRows={setSelectedRows}
             />
