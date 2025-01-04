@@ -42,6 +42,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
 
     useEffect(() => {
         setData(equipmentArray);
+        setRowSelection({});
     }, [equipmentArray])
 
     const columns = useMemo<ColumnDef<Equipment>[]>(() => [
@@ -132,16 +133,19 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
         data,
         columns,
         enableRowSelection: true,
-        getRowId: row => row.id,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        onSortingChange: setSorting,
+
         state: {
             rowSelection,
             sorting,
         },
+
+        getRowId: row => row.id,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        
+        onRowSelectionChange: setRowSelection,
+        onSortingChange: setSorting,
     });
 
     function equipmentStatusBackground(equipStatus: string) {

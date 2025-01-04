@@ -48,6 +48,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
 
     useEffect(() => {
         setData(mRecordsArray);
+        setRowSelection({});
     }, [mRecordsArray])
 
     const columns = useMemo<ColumnDef<MaintenanceRecord>[]>(() => [
@@ -192,15 +193,8 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
         data,
         columns,
         enableRowSelection: true,
-        getRowId: row => row.id,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getExpandedRowModel: getExpandedRowModel(),
-        getGroupedRowModel: getGroupedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        onSortingChange: setSorting,
-        onGroupingChange: setGrouping,
+        autoResetExpanded: false,
+
         state: {
             rowSelection,
             sorting,
@@ -208,7 +202,18 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
         },
         defaultColumn: {
             enableGrouping: false,
-        }
+        },
+
+        getRowId: row => row.id,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getExpandedRowModel: getExpandedRowModel(),
+        getGroupedRowModel: getGroupedRowModel(),
+        
+        onRowSelectionChange: setRowSelection,
+        onSortingChange: setSorting,
+        onGroupingChange: setGrouping,
     });
 
     function mRecordStatusBackground(recordStatus: string) {
