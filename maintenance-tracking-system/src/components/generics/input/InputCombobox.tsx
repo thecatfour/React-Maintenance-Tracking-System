@@ -13,7 +13,7 @@ interface ComponentProps {
 
 const InputCombobox: React.FC<ComponentProps> = ({ allOptions, placeholder, name, optionsKey }) => {
     const { register, setValue, formState: { errors, defaultValues } } = useFormContext();
-    const [filteredOptions, setFilteredOptions] = useState<any[]>([]);
+    const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
 
     const query = useWatch({ name: name });
 
