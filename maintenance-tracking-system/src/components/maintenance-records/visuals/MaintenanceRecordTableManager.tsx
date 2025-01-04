@@ -5,8 +5,8 @@ import { MaintenanceRecord } from "@/lib/maintenance-records/MaintenanceRecordIn
 import { Dispatch, useState } from "react";
 import MaintenanceRecordTable from "./MaintenanceRecordTable";
 import { RowSelectionState } from "@tanstack/react-table";
-import MaintenanceRecordFullForm from "../forms/MaintenanceRecordFullForm";
 import MaintenanceRecordCreateButton from "../buttons/MaintenanceRecordCreateButton";
+import MaintenanceRecordEditButton from "../buttons/MaintenanceRecordEditButton";
 
 interface ComponentProps {
     equipment: Equipment[];
@@ -26,6 +26,13 @@ const MaintenanceRecordTableManager: React.FC<ComponentProps> = ({ equipment, da
                     setRows={setData}
                     equipmentArray={equipment}
                 />
+
+                <MaintenanceRecordEditButton
+                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
+                    allRows={data}
+                    setRows={setData}
+                    equipmentArray={equipment} 
+                    selectedRows={selectedRows}                />
             </div>
 
             <MaintenanceRecordTable
