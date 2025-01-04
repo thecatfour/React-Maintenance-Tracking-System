@@ -20,7 +20,7 @@ export const mRecordSchema = z.object({
         .nonempty({message: M_RECORD_ERROR_MSG.technician.required})
         .min(2, {message: M_RECORD_ERROR_MSG.technician.minLength})
         .refine(s => s.toString().trim().length >= 1, {message: M_RECORD_ERROR_MSG.technician.trailingWhiteSpace}),
-    hoursSpent: z.string()
+    hoursSpent: z.coerce.string()
         .nonempty({message: M_RECORD_ERROR_MSG.hoursSpent.required})
         .pipe(z.coerce.number()
         .nonnegative({message: M_RECORD_ERROR_MSG.hoursSpent.positive})
