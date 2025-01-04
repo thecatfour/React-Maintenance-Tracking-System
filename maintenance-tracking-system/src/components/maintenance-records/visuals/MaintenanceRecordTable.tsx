@@ -219,9 +219,9 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
     function mRecordStatusBackground(recordStatus: string) {
             return clsx(
                 {
-                    "bg-green-900":     recordStatus == "Complete",
-                    "bg-red-900":       recordStatus == "Incomplete",
-                    "bg-yellow-800":    recordStatus == "Pending Parts",
+                    "bg-green-900":  recordStatus == "Complete",
+                    "bg-yellow-800": recordStatus == "Incomplete",
+                    "bg-red-900":    recordStatus == "Pending Parts",
                 }
             );
         };
