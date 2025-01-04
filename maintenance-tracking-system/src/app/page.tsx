@@ -6,7 +6,6 @@ import Navbar from "@/components/generics/visuals/Navbar";
 import { useState } from "react";
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import { MaintenanceRecord } from "@/lib/maintenance-records/MaintenanceRecordInterface";
-import MaintenanceRecordTable from "@/components/maintenance-records/visuals/MaintenanceRecordTable";
 import { RowSelectionState } from "@tanstack/react-table";
 import MaintenanceRecordTableManager from "@/components/maintenance-records/visuals/MaintenanceRecordTableManager";
 
