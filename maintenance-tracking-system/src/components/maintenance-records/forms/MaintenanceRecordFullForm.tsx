@@ -21,7 +21,7 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
     const methods = useForm<MaintenanceRecordSchemaType>({
         resolver: zodResolver(mRecordSchema),
         defaultValues: {
-            equipmentId: selectedRow?.equipmentId,
+            equipmentId: selectedRow?.equipmentId != null ? allEquipment.find((equipment) => equipment.id === selectedRow?.equipmentId)?.name : undefined,
             date: selectedRow?.date.toISOString().substring(0, 10),
             type: selectedRow?.type,
             technician: selectedRow?.technician,
@@ -50,7 +50,7 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
             technician: data.technician,
             hoursSpent: data.hoursSpent,
             description: data.description,
-            partsReplaced: data.partsReplaced,
+            partsReplaced: data.partsReplaced?.length === 0 ? undefined : data.partsReplaced,
             priority: data.priority,
             completionStatus: data.completionStatus,
         }
@@ -128,7 +128,7 @@ const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, all
                     name="hoursSpent"
                 />
 
-<div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col gap-2 w-full">
                     <div>
                         Parts Replaced (Optional)
                     </div>
