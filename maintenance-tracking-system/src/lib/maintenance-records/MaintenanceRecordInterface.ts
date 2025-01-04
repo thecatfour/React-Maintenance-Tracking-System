@@ -16,6 +16,16 @@ export const MaintenanceRecordStatus = [
     "Pending Parts",
 ] as const;
 
+interface DictFormat {
+    [key: string]: string
+}
+
+export const MaintenanceRecordStatusColors: DictFormat = {
+    "Complete":         "bg-green-900",
+    "Incomplete":       "bg-yellow-800",
+    "Pending Parts":    "bg-red-900",
+} as const;
+
 export interface MaintenanceRecord {
     id: string;
     equipmentId: string;

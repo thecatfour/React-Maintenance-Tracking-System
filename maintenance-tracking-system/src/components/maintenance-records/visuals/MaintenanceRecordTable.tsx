@@ -4,7 +4,7 @@ import TableFilter from "@/components/generics/filters/TableFilter";
 import IndeterminateCheckbox from "@/components/generics/input/IndeterminateCheckbox";
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import dateFilter from "@/lib/filters/DateFilter";
-import { MaintenanceRecord, MaintenanceRecordPriority, MaintenanceRecordStatus, MaintenanceRecordType } from "@/lib/maintenance-records/MaintenanceRecordInterface";
+import { MaintenanceRecord, MaintenanceRecordPriority, MaintenanceRecordStatus, MaintenanceRecordStatusColors, MaintenanceRecordType } from "@/lib/maintenance-records/MaintenanceRecordInterface";
 import { 
     ColumnDef, 
     flexRender, 
@@ -19,7 +19,6 @@ import {
     SortingState, 
     useReactTable 
 } from "@tanstack/react-table";
-import clsx from "clsx";
 import { Dispatch, useEffect, useMemo, useState } from "react";
 
 
@@ -216,16 +215,6 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
         onGroupingChange: setGrouping,
     });
 
-    function mRecordStatusBackground(recordStatus: string) {
-            return clsx(
-                {
-                    "bg-green-900":  recordStatus == "Complete",
-                    "bg-yellow-800": recordStatus == "Incomplete",
-                    "bg-red-900":    recordStatus == "Pending Parts",
-                }
-            );
-        };
-
     return (
         <>
             <table style={{ minWidth: table.getCenterTotalSize(), width: "100%"}}>
@@ -308,7 +297,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                         <tr
                             data-testid="maintenance-record-row"
                             key={row.id}
-                            className={mRecordStatusBackground(row.getValue("completionStatus"))}
+                            className={MaintenanceRecordStatusColors?.[row.getValue("completionStatus") as string]}
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
