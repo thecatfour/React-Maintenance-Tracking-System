@@ -1,4 +1,7 @@
+"use client";
+
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
+import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 interface ComponentProps {
@@ -9,16 +12,26 @@ interface ComponentProps {
 }
 
 const InputCombobox: React.FC<ComponentProps> = ({ allOptions, placeholder, name, optionsKey }) => {
-    const { register, formState: { errors } } = useFormContext();
+    const { register, setValue, formState: { errors, defaultValues } } = useFormContext();
+    const [filteredOptions, setFilteredOptions] = useState<any[]>([]);
 
     const query = useWatch({ name: name });
 
-    const filteredOptions =
-        query == null
-        ? allOptions
-        : allOptions.filter((option) => {
-            return option?.[optionsKey].toLowerCase().includes(query.toLowerCase())
-        })
+    // On mount, explicitly change the value to the default value specified
+    useEffect(() => {
+        if (defaultValues?.[name] != null) {
+            setValue(name, defaultValues?.[name]);
+        }
+    }, [])
+
+    // Change the options based on the query inputted in the input box
+    useEffect(() => {
+        if (query == null) {
+            setFilteredOptions(allOptions);
+        } else {
+            setFilteredOptions(allOptions.filter((option) => option?.[optionsKey].toLowerCase().includes(query.toLowerCase())));
+        }
+    }, [query])
 
     return (
         <div>
