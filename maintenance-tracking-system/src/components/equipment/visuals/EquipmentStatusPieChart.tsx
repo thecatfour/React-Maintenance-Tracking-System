@@ -1,10 +1,6 @@
-import { Equipment, EquipmentStatus, EquipmentStatusColors, EquipmentStatusPieColors } from "@/lib/equipment/EquipmentInterface";
+import { Equipment, EquipmentStatus } from "@/lib/equipment/EquipmentInterface";
 import { useEffect, useState } from "react";
 import { Cell, Legend, Pie, PieChart } from "recharts";
-
-interface ComponentProps {
-    equipmentArray: Equipment[];
-}
 
 interface SingleCell {
     name: string;
@@ -14,6 +10,21 @@ interface SingleCell {
 interface DictCell {
     [key: string]: SingleCell;
 }
+
+interface DictFormat {
+    [key: string]: string
+}
+
+interface ComponentProps {
+    equipmentArray: Equipment[];
+}
+
+const EquipmentStatusPieColors: DictFormat = {
+    "Operational":  "#1b700a",
+    "Down":         "#b33212",
+    "Maintenance":  "#b58107",
+    "Retired":      "#848a87",
+} as const;
 
 const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) => {
     const [data, setData] = useState(equipmentArray);
@@ -56,6 +67,7 @@ const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) =
                 <Pie
                     data={cellValues}
                     dataKey="value"
+                    isAnimationActive={false}
                     label
                 >
                     {cellValues.map((cell) => (
@@ -74,7 +86,7 @@ const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) =
                         cellValues.map(
                             (cell) => ({
                                 id: cell.name,
-                                type: "circle",
+                                type: "square",
                                 value: `${cell.name} - ${cell.value}`,
                                 color: EquipmentStatusPieColors?.[cell.name],
                             })
