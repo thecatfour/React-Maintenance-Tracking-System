@@ -97,7 +97,7 @@ export default function Home() {
             }
             {isDashboardOpen &&
                 <div className="flex flex-col gap-2">
-                    <div className="bg-white flex flex-row w-full">
+                    <div className="bg-white flex flex-row w-full overflow-x-auto">
                         <EquipmentStatusPieChart
                             equipmentArray={equipment}
                         />
