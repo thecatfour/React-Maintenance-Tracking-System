@@ -93,6 +93,7 @@ $ npx playwright test --ui
 Unit tests are used on several components such as the forms or the filter components on the tables. They were implemented using Playwright and are located in the tests/ directory.
 
 equipment-management.spec.ts contains tests for equipment.
+
 maintenance-records-management.spec.ts constains tests for maintenance records.
 
 The src/lib/playwright-helpers/ directory contains helper functions necessary for both test files including:
