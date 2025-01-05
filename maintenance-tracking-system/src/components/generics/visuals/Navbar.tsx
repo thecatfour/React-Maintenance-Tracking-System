@@ -40,7 +40,7 @@ const Navbar: React.FC<ComponentProps> = ({ clickEquipment, clickMRecords, click
                 value={selected} 
                 onChange={setSelected} 
                 data-testid="navbar" 
-                className="fixed flex flex-cols p-2 gap-2.5 h-[60px] w-full bg-gray-500"
+                className="fixed flex flex-cols p-2 gap-2.5 h-[60px] w-full bg-gray-500 z-10"
             >
                 {options.map((option) => (
                     <Radio
