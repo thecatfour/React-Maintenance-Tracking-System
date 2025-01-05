@@ -15,7 +15,7 @@ Node.js v20.18.0
 $ node -v
 v20.18.0
 ```
-2. Clone or fork the project and step into the directory "React-Maintenance-Tracking-System/maintenance-tracking-system/" with the following command.
+2. Clone or fork the project and step into the directory *React-Maintenance-Tracking-System/maintenance-tracking-system/* with the following command.
 ```bash
 $ cd maintenance-tracking-system
 ```
@@ -26,7 +26,7 @@ $ npm install
 4. Once the install is finished, you should be able to run the app.
 
 ### How to run the application
-1. After completing installation, you should first run the following command to start the development environment. You need to be in the maintenance-tracking-system directory for this to run.
+1. After completing installation, you should first run the following command to start the development environment. You need to be in the *maintenance-tracking-system/* directory for this to run.
 ```bash
 $ cd .../React-Maintenance-Tracking-System/maintenance-tracking-system 
 $ npm run dev
@@ -94,7 +94,7 @@ Unit tests are used on several components such as the forms or the filter compon
 - equipment-management.spec.ts contains tests for equipment.
 - maintenance-records-management.spec.ts constains tests for maintenance records.
 
-The src/lib/playwright-helpers/ directory contains helper functions necessary for both test files including:
+The *src/lib/playwright-helpers/* directory contains helper functions necessary for both test files including:
 - Creating an equipment or record
 - Checking an equipment or record in the table
 
@@ -146,19 +146,19 @@ Playwright
 
 React-hook-form
 - Provides functions and components to help make reusable input components
-- Used in all forms and several input components in the generics/input/ directory
+- Used in all forms and several input components in the *generics/input/* directory
 
 Clsx
 - Provides an easy way to understand dynamic classname assignment
 - Used to select row colors based on status
 
 ### Architecture decisions
-The code for the app is organized into three main directories in the src/ file.
+The code for the app is organized into three main directories in the *src/* file.
 1. **app:** contains the pages that are displayed to users.
 2. **components:** contains the components that are reused and rendered on pages.
 3. **lib:** contains other helper functions and files that do not have tsx elements.
 
-The components/ and lib/ directory contain a structure similar to the following:
+The *components/* and *lib/* directory contain a structure similar to the following:
 ```
 components/
    equipment/
@@ -172,7 +172,7 @@ components/
    maintenance-records/
 ```
 Basically, the files are stored in directories that function as categories to generalize their functions.
-The generics/ directory contains elements that can be reused in other components such as a modal or custom input.
+The *generics/* directory contains elements that can be reused in other components such as a modal or custom input.
 
 ### State management approach
 Multiple hooks are used in the home page file to contain all necessary information. These are used to maintain equipment and maintenance records accross the different components. Since there is no backend to store information, a simple navbar is used to change the components that are rendered on the page. This allows the arrays of equipment and maintenance records to persist when switching between different components.
