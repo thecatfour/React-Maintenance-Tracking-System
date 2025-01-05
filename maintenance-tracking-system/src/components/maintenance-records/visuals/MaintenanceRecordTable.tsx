@@ -55,8 +55,8 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
     function getRowColor(rowStatus: string) {
         return clsx({
             "bg-green-900 text-white":     rowStatus === "Complete",
-            "bg-red-900 text-white":       rowStatus === "Incomplete",
-            "bg-yellow-800 text-white":    rowStatus === "Pending Parts",
+            "bg-yellow-700 text-white":       rowStatus === "Incomplete",
+            "bg-red-800 text-white":    rowStatus === "Pending Parts",
         });
     }
 
@@ -103,8 +103,8 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                 {
                     id: "equipmentName",
                     header: "Equipment Name",
-                    size: 250,
-                    accessorFn: ( row )  => `${equipmentArray.find(equip => equip.id == row.equipmentId)?.name}`,
+                    size: 210,
+                    accessorFn: ( row )  => `${equipmentArray.find(equip => equip.id === row.equipmentId)?.name}`,
                     enableGrouping: true,
                     aggregatedCell: "Equipment Name",
                 },
@@ -152,8 +152,8 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                                 </>
                             ) : (
                                 <>
-                                    {(row.original.partsReplaced as string[]).map(part => (
-                                        <li key={part}>
+                                    {(row.original.partsReplaced as string[]).map((part, index) => (
+                                        <li key={index}>
                                             {part}
                                         </li>
                                     ))}
@@ -166,7 +166,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                 {
                     accessorKey: "priority",
                     header: "Priority",
-                    size: 125,
+                    size: 100,
                     meta: {
                         filterVariant: "select",
                         selectOptions: MaintenanceRecordPriority,
@@ -177,6 +177,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                     accessorKey: "completionStatus",
                     header: "Status",
                     size: 150,
+                    filterFn: "equalsString",
                     meta: {
                         filterVariant: "select",
                         selectOptions: MaintenanceRecordStatus,
