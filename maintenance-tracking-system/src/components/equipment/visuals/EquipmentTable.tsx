@@ -1,6 +1,6 @@
 "use client";
 
-import { Equipment, EquipmentDepartment, EquipmentStatus, EquipmentStatusColors } from "@/lib/equipment/EquipmentInterface";
+import { Equipment, EquipmentDepartment, EquipmentStatus } from "@/lib/equipment/EquipmentInterface";
 import {
     ColumnDef,
     flexRender,
@@ -121,7 +121,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                 {
                     accessorKey: "location",
                     header: "Location",
-                    size: 200,
+                    size: 150,
                 },
                 {
                     accessorKey: "installDate",
