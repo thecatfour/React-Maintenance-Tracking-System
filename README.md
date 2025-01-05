@@ -91,10 +91,8 @@ $ npx playwright test --ui
 
 ### Testing strategy
 Unit tests are used on several components such as the forms or the filter components on the tables. They were implemented using Playwright and are located in the tests/ directory.
-
-equipment-management.spec.ts contains tests for equipment.
-
-maintenance-records-management.spec.ts constains tests for maintenance records.
+- equipment-management.spec.ts contains tests for equipment.
+- maintenance-records-management.spec.ts constains tests for maintenance records.
 
 The src/lib/playwright-helpers/ directory contains helper functions necessary for both test files including:
 - Creating an equipment or record
@@ -163,15 +161,15 @@ The code for the app is organized into three main directories in the src/ file.
 The components/ and lib/ directory contain a structure similar to the following:
 ```
 components/
-	equipment/
-		buttons/
-			EquipmentCreateButton.tsx
-		forms/
-			EquipmentFullForm.tsx
-		visuals/
-			EquipmentTable.tsx
-	generics/
-	maintenance-records/
+   equipment/
+      buttons/
+         EquipmentCreateButton.tsx
+      forms/
+         EquipmentFullForm.tsx
+      visuals/
+         EquipmentTable.tsx
+   generics/
+   maintenance-records/
 ```
 Basically, the files are stored in directories that function as categories to generalize their functions.
 The generics/ directory contains elements that can be reused in other components such as a modal or custom input.
