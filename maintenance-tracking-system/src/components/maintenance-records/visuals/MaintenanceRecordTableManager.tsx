@@ -21,18 +21,19 @@ const MaintenanceRecordTableManager: React.FC<ComponentProps> = ({ equipmentArra
         <div className="flex flex-col gap-2">
             <div className="flex gap-2 mt-2 ml-2">
                 <MaintenanceRecordCreateButton
-                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
+                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg text-white"
                     allRows={data}
                     setRows={setData}
                     equipmentArray={equipmentArray}
                 />
 
                 <MaintenanceRecordEditButton
-                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg"
+                    className="bg-zinc-600 hover:bg-zinc-500 p-1 rounded-lg text-white"
                     allRows={data}
                     setRows={setData}
                     equipmentArray={equipmentArray} 
-                    selectedRows={selectedRows}                />
+                    selectedRows={selectedRows}                
+                />
             </div>
 
             <MaintenanceRecordTable

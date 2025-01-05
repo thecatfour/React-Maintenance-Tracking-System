@@ -1,6 +1,6 @@
 import { Column, Table } from "@tanstack/react-table";
 
-const inputClass = "bg-white text-black mb-2 w-full";
+const inputClass = "bg-white text-black mb-2 w-full border-2";
 
 interface ComponentProps {
     column: Column<any, any>;

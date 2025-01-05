@@ -54,9 +54,9 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
 
     function getRowColor(rowStatus: string) {
         return clsx({
-            "bg-green-900":     rowStatus === "Complete",
-            "bg-red-900":       rowStatus === "Incomplete",
-            "bg-yellow-800":    rowStatus === "Pending Parts",
+            "bg-green-900 text-white":     rowStatus === "Complete",
+            "bg-red-900 text-white":       rowStatus === "Incomplete",
+            "bg-yellow-800 text-white":    rowStatus === "Pending Parts",
         });
     }
 

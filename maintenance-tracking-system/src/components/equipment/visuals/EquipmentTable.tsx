@@ -220,6 +220,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                             data-testid="equipment-row"
                             key={row.id}
                             className={getRowColor(row.getValue("status"))}
+                            style={{ color: "white" }}
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
