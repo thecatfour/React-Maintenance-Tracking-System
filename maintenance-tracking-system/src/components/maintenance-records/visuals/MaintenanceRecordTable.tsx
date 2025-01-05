@@ -22,7 +22,8 @@ import {
 import clsx from "clsx";
 import { Dispatch, useEffect, useMemo, useState } from "react";
 
-
+// This is used to pass information to the filter component.
+// This tells it what to return
 declare module "@tanstack/react-table" {
     interface ColumnMeta<TData extends RowData, TValue> {
         filterVariant?: "text" | "date-range" | "number-range" | "select",
@@ -37,6 +38,16 @@ interface ComponentProps {
     title?: string;
 }
 
+/**
+ * This displays a table that shows all fields of a maintenance record as well as the equipment name.
+ * It provides functionality such as grouping by equipment id / equipment name,
+ * sorting, filtering, and selecting rows. Selected rows can be accessed by parent components by
+ * passing a useState set function to setSelectedRows.
+ * @param equipmentArray The equipment that should be joined with records
+ * @param mRecordsArray The maintenance records that should be displayed
+ * @param setSelectedRows The dispatch function to access selected rows in the table
+ * @param title (Optional) The title of the table. Defaults to "Maintenance Records"
+ */
 const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRecordsArray, setSelectedRows, title="Maintenance Records" }) => {
     const [data, setData] = useState<MaintenanceRecord[]>(mRecordsArray);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});

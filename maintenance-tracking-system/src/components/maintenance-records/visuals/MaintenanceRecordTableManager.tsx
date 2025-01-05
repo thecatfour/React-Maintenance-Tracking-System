@@ -14,6 +14,12 @@ interface ComponentProps {
     setData: Dispatch<MaintenanceRecord[]>;
 }
 
+/**
+ * This component renders buttons to modify the maintenance record array as well as a table of the maintenance record array
+ * @param data The maintenance record array that is meant to be displayed and changed
+ * @param setData The dispatch function used to change the maintenance record array
+ * @param equipmentArray The equipment objects that give context to the equipmentId field in maintenance records
+ */
 const MaintenanceRecordTableManager: React.FC<ComponentProps> = ({ equipmentArray, data, setData }) => {
     const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 

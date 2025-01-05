@@ -14,12 +14,21 @@ interface ComponentProps {
     selectedRows: RowSelectionState;
 }
 
+/**
+ * This component renders a button that will open a modal to edit an equipment object
+ * @param className The className for the button
+ * @param allRows The entire array of equipment objects
+ * @param setRows The state update function for allRows
+ * @param selectedRows The rows that are selected to be updated. There can only be one row selected for this button
+ */
 const EquipmentEditOneButton: React.FC<ComponentProps> = ({ className, allRows, setRows, selectedRows }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [canOpen, setCanOpen] = useState(false);
     const [isWarningOpen, setIsWarningOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<Equipment>();
 
+    // If exactly one row is selected, open the edit form.
+    // Else, open the warning
     const tryOpeningForm = () => {
         if (canOpen) {
             setIsOpen(true);
@@ -28,6 +37,8 @@ const EquipmentEditOneButton: React.FC<ComponentProps> = ({ className, allRows, 
         }
     }
 
+    // Since the edit form can only be opened if a single row is selected,
+    // we need to make sure that there is exactly one row selected
     useEffect(() => {
         if (Object.keys(selectedRows).length === 1) {
             setCanOpen(true);

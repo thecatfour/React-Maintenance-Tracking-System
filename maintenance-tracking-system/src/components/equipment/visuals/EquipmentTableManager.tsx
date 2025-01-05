@@ -1,7 +1,7 @@
 "use client";
 
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, useState } from "react";
 import EquipmentTable from "./EquipmentTable";
 import { RowSelectionState } from "@tanstack/react-table";
 import EquipmentStatusUpdateButton from "@/components/equipment/buttons/EquipmentStatusUpdateButton";
@@ -13,6 +13,11 @@ interface ComponentProps {
     setData: Dispatch<Equipment[]>;
 }
 
+/**
+ * This component renders buttons to modify the equipment array as well as a table of the equipment array
+ * @param data The equipment array that is meant to be displayed and changed
+ * @param setData The dispatch function used to change the equipment array
+ */
 const EquipmentTableManager: React.FC<ComponentProps> = ({ data, setData }) => {
     const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 

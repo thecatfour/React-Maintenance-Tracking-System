@@ -4,6 +4,11 @@ interface ComponentProps {
     onClose: (value: boolean) => void;
 }
 
+/**
+ * This renders a confirm and cancel button
+ * @param onConfirm The function to be called when the confirm button is clicked
+ * @param onClose The function to be called when the cancel button is clicked
+ */
 const ConfirmAndCancel: React.FC<ComponentProps> = ({ onConfirm, onClose }) => {
     const onCancel = (event: any) => {
         event.preventDefault();

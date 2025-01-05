@@ -14,6 +14,13 @@ interface ComponentProps {
     selectedRows: RowSelectionState;
 }
 
+/**
+ * This form changes the status of all selected rows.
+ * @param allRows The entire array of equipment objects
+ * @param setRows The state update function for allRows. This is used to add the updated equipment to the array
+ * @param onClose The function that should be executed when the form is submitted or canceled
+ * @param selectedRows The equipment objects that are being edited
+ */
 const EquipmentStatusForm: React.FC<ComponentProps> = ({ allRows, setRows, selectedRows, onClose }) => {
     const methods = useForm();
 

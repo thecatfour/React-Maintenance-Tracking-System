@@ -13,6 +13,13 @@ interface ComponentProps {
     setRows: Dispatch<MaintenanceRecord[]>;
 }
 
+/**
+ * This component renders a button that will open a modal to create a maintenance record object
+ * @param className The className for the button
+ * @param allRows The entire array of maintenance record objects
+ * @param setRows The state update function for allRows
+ * @param equipmentArray The equipment that correspond to the records
+ */
 const MaintenanceRecordCreateButton: React.FC<ComponentProps> = ({ className, equipmentArray, allRows, setRows }) => {
     const [isOpen, setIsOpen] = useState(false);
 

@@ -18,6 +18,8 @@ import TableFilter from "@/components/generics/filters/TableFilter";
 import dateFilter from "@/lib/filters/DateFilter";
 import { clsx } from "clsx";
 
+// This is used to pass information to the filter component.
+// This tells it what to return
 declare module "@tanstack/react-table" {
     interface ColumnMeta<TData extends RowData, TValue> {
         filterVariant?: "text" | "date-range" | "number-range" | "select",
@@ -30,6 +32,13 @@ interface ComponentProps {
     setSelectedRows: Dispatch<RowSelectionState>;
 }
 
+/**
+ * This displays a table that shows all fields of an equipment. It provides functionality such as
+ * sorting, filtering, and selecting rows. Selected rows can be accessed by parent components by
+ * passing a useState set function to setSelectedRows.
+ * @param equipmentArray The equipment that should be displayed
+ * @param setSelectedRows The dispatch function to access selected rows in the table
+ */
 const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedRows }) => {
     const [data, setData] = useState<Equipment[]>(equipmentArray);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});

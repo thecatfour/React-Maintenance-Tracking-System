@@ -11,6 +11,12 @@ interface ComponentProps {
     setRows: Dispatch<Equipment[]>;
 }
 
+/**
+ * This component renders a button that will open a modal to create an equipment object
+ * @param className The className for the button
+ * @param allRows The entire array of equipment objects
+ * @param setRows The state update function for allRows
+ */
 const EquipmentCreateButton: React.FC<ComponentProps> = ({ className, allRows, setRows }) => {
     const [isOpen, setIsOpen] = useState(false);
     

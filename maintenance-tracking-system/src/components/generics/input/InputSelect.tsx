@@ -6,6 +6,12 @@ interface ComponentProps {
     choices: readonly any[];
 }
 
+/**
+ * This input component renders a select component on a form
+ * @param display The title for the input component
+ * @param name The name used to register the input to the form
+ * @param choices The array of choices that a user can select
+ */
 const InputSelect: React.FC<ComponentProps> = ({ display, name, choices }) => {
     const { register } = useFormContext();
     

@@ -16,12 +16,22 @@ interface ComponentProps {
     selectedRows: RowSelectionState;
 }
 
+/**
+ * This component renders a button that will open a modal to edit one maintenance record object
+ * @param className The className for the button
+ * @param allRows The entire array of maintenance record objects
+ * @param setRows The state update function for allRows
+ * @param equipmentArray The equipment that correspond to the records
+ * @param selectedRows The rows that are selected to be updated. There can only be one row selected for this button
+ */
 const MaintenanceRecordEditButton: React.FC<ComponentProps> = ({ className, equipmentArray, allRows, setRows, selectedRows }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [canOpen, setCanOpen] = useState(false);
     const [isWarningOpen, setIsWarningOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<MaintenanceRecord>();
 
+    // If exactly one row is selected, open the edit form.
+    // Else, open the warning
     const tryOpeningForm = () => {
         if (canOpen) {
             setIsOpen(true);
@@ -30,6 +40,8 @@ const MaintenanceRecordEditButton: React.FC<ComponentProps> = ({ className, equi
         }
     }
 
+    // Since the edit form can only be opened if a single row is selected,
+    // we need to make sure that there is exactly one row selected
     useEffect(() => {
         if (Object.keys(selectedRows).length === 1) {
             setCanOpen(true);

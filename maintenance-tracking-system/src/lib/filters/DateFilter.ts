@@ -8,6 +8,7 @@ const dateFilter: FilterFn<any> = (row: Row<any>, columnId: string, filterValue:
         return true;
     }
 
+    // We compare using the ISO string because that is what the filter date returns
     const columnDate: string = (row.getValue(columnId) as Date).toISOString().substring(0,10);
 
     if (!emptyStartDate && emptyEndDate) {

@@ -15,6 +15,12 @@ interface ComponentProps {
     clickDashboard: () => void;
 }
 
+/**
+ * This component renders a navbar at the top of the screen.
+ * @param clickEquipment Function to focus on the equipment table
+ * @param clickMRecords Function to focus on the maintenance records
+ * @param clickDashboard Function to focus on the dashboard 
+ */
 const Navbar: React.FC<ComponentProps> = ({ clickEquipment, clickMRecords, clickDashboard }) => {
     const [selected, setSelected] = useState(options[0]);
 

@@ -14,6 +14,15 @@ interface ComponentProps {
     selectedRow?: Equipment;
 }
 
+/**
+ * This form can create a new equipment object or edit an existing equipment object.
+ * If selectedRow is provided, then the form will act as an edit form with the object's
+ * values as default values.
+ * @param allRows The entire array of equipment objects
+ * @param setRows The state update function for allRows. This is used to add the new/updated equipment to the array
+ * @param onClose The function that should be executed when the form is submitted or canceled
+ * @param selectedRow (Optional) The equipment object that is being edited
+ */
 const EquipmentFullForm: React.FC<ComponentProps> = ({ allRows, setRows, onClose, selectedRow }) => {
     const methods = useForm<EquipmentSchemaType>({
         resolver: zodResolver(equipmentSchema),

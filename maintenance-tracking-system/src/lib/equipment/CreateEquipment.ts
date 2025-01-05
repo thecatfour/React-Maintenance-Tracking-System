@@ -61,6 +61,11 @@ const MODELS = [
     "mod ",
 ]
 
+/**
+ * Function to create an array of equipment objects
+ * @param amount The amount of objects to create
+ * @returns Equipment[] 
+ */
 export default function createRandomEquipment(amount: number) {
     let equipmentArray: Equipment[] = [];
     const today = new Date();

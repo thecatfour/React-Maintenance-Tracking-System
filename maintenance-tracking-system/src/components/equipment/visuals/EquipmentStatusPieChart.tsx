@@ -26,6 +26,11 @@ const EquipmentStatusPieColors: DictFormat = {
     "Retired":      "#848a87",
 } as const;
 
+/**
+ * Creates a pie chart that displays the amount of each status in the equipment array.
+ * It also shows a legend to help clarify the colors
+ * @param equipmentArray The array of equipment objects 
+ */
 const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) => {
     const [cellValues, setCellValues] = useState<SingleCell[]>([]);
     
@@ -33,19 +38,23 @@ const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) =
         createCells();
     }, [equipmentArray])
 
+    // We need to process the data to make it easier to graph
     function createCells() {
-        let preprocessedData: DictCell = {};
+        const preprocessedData: DictCell = {};
 
+        // Initialize the dictionary
         for (let index in EquipmentStatus) {
             preprocessedData[EquipmentStatus[index]] = {name: EquipmentStatus[index], value: 0};
         }
         
+        // Sum all instances of each status
         for (let index in equipmentArray) {
             preprocessedData[equipmentArray[index].status as string].value += 1;
         }
 
-        let newCells = [];
+        const newCells = [];
 
+        // Translate the sums into the standardized dictionary
         for (let index in EquipmentStatus) {
             newCells.push(preprocessedData[EquipmentStatus[index]]);
         }

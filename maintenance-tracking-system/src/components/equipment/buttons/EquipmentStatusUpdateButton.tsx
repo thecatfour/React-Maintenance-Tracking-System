@@ -13,6 +13,13 @@ interface ComponentProps {
     selectedRows: RowSelectionState;
 }
 
+/**
+ * This component renders a button that will open a modal to edit the status of multiple equipment objects
+ * @param className The className for the button
+ * @param allRows The entire array of equipment objects
+ * @param setRows The state update function for allRows
+ * @param selectedRows The rows that are selected to be updated. There can be any amount selected
+ */
 const EquipmentStatusUpdateButton: React.FC<ComponentProps> = ({ className, allRows, setRows, selectedRows }) => {
     const [isOpen, setIsOpen] = useState(false);
     

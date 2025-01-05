@@ -11,6 +11,13 @@ interface ComponentProps {
     name: string;
 }
 
+/**
+ * This input component allows typing to find a specific dropdown menu option
+ * @param allOptions The array objects that options can be selected from
+ * @param optionsKey The key used to access the elements from the object array
+ * @param placeholder The placeholder and title for the input component
+ * @param name The name used to register the input to a form
+ */
 const InputCombobox: React.FC<ComponentProps> = ({ allOptions, placeholder, name, optionsKey }) => {
     const { register, setValue, formState: { errors, defaultValues } } = useFormContext();
     const [filteredOptions, setFilteredOptions] = useState<string[]>([]);

@@ -6,6 +6,13 @@ interface ComponentProps {
     children: any
 }
 
+/**
+ * This component renders a modal on the screen. It renders any children in the component
+ * onto the modal
+ * @param open The boolean that determines if the modal is open
+ * @param onClose The function to call to close the modal
+ * @param children Any elements rendered in the modal
+ */
 const DialogModal: React.FC<ComponentProps> = ({ open, onClose, children }) => {
     return (
         <Dialog

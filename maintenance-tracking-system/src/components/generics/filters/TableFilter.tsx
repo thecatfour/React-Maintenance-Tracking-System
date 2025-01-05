@@ -1,4 +1,4 @@
-import { Column, Table } from "@tanstack/react-table";
+import { Column } from "@tanstack/react-table";
 
 const inputClass = "bg-white text-black mb-2 w-full border-2";
 
@@ -6,6 +6,10 @@ interface ComponentProps {
     column: Column<any, any>;
 }
 
+/**
+ * This component returns a filter based on the metadata in a column
+ * @param column The column from the table
+ */
 const TableFilter: React.FC<ComponentProps> = ({ column }) => {
     const { filterVariant, selectOptions } = column.columnDef.meta ?? {};
 
@@ -78,6 +82,7 @@ const TableFilter: React.FC<ComponentProps> = ({ column }) => {
         )
     }
 
+    // If a column has unknown metadata
     return (
         <>
             ?

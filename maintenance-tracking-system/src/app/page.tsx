@@ -1,6 +1,5 @@
 "use client";
 
-import { EXAMPLE_EQUIPMENT, EXAMPLE_MAINTENANCE_RECORD } from "@/lib/ExampleObjects";
 import EquipmentTableManager from "@/components/equipment/visuals/EquipmentTableManager";
 import Navbar from "@/components/generics/visuals/Navbar";
 import { useEffect, useState } from "react";
@@ -14,6 +13,14 @@ import { RowSelectionState } from "@tanstack/react-table";
 import createRandomEquipment from "@/lib/equipment/CreateEquipment";
 import createRandomMaintenanceRecords from "@/lib/maintenance-records/CreateMaintenanceRecords";
 
+/*
+    Home
+
+    This is the page where all the arrays of objects are stored.
+    Since there is no backend, useState is used to manage all
+    of the equipment and records.
+*/
+
 export default function Home() {
     const [equipment, setEquipment] = useState<Equipment[]>([]);
     const [recentMRecords, setRecentMRecords] = useState<MaintenanceRecord[]>([]);
@@ -26,10 +33,12 @@ export default function Home() {
 
     const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 
+    // Generates the equipment
     useEffect(() => {
         setEquipment(createRandomEquipment(50));
     }, []);
 
+    // Generates the records after the equipment is finished
     useEffect(() => {
         if (createRecords && equipment.length > 0) {
             setMRecords(createRandomMaintenanceRecords(200, equipment));
@@ -37,6 +46,7 @@ export default function Home() {
         }
     }, [equipment])
 
+    // Filters the records to be within one week of today, hence the - 7
     useEffect(() => {
         let oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
@@ -104,9 +114,7 @@ export default function Home() {
                             title="Recent Maintenance Records"
                         />
                     </div>
-                    
                 </div>
-
             }
         </div>  
     );

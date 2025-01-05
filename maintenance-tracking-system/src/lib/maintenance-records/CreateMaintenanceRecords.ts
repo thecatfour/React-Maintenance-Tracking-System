@@ -66,7 +66,12 @@ const PARTS = [
     "Circuit boards",
     "Wires",
 ];
-  
+
+/**
+ * Function to create an array of maintenance record objects
+ * @param amount The amount of objects to create
+ * @param equipmentArray The equipment objects for the records to correspond to
+ */
 export default function createRandomMaintenanceRecords(amount: number, equipmentArray: Equipment[]) {
     let mRecordArray: MaintenanceRecord[] = [];
     const today = new Date();

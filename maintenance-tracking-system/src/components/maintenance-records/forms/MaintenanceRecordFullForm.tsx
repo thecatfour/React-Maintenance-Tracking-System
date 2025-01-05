@@ -17,6 +17,16 @@ interface ComponentProps {
     selectedRow?: MaintenanceRecord;
 }
 
+/**
+ * This form can create a new maintenance record object or edit an existing record.
+ * If selectedRow is provided, then the form will act as an edit form with the object's
+ * values as default values.
+ * @param allRows The entire array of maintenance record objects
+ * @param setRows The state update function for allRows. This is used to add the new/updated records to the array
+ * @param onClose The function that should be executed when the form is submitted or canceled
+ * @param selectedRow (Optional) The maintenance record object that is being edited
+ * @param allEquipment The equipment that corresponds to the records
+ */
 const MaintenanceRecordFullForm: React.FC<ComponentProps> = ({ allEquipment, allRows, setRows, onClose, selectedRow }) => {
     const methods = useForm<MaintenanceRecordSchemaType>({
         resolver: zodResolver(mRecordSchema),
