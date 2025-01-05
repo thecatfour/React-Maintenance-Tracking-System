@@ -43,7 +43,7 @@ const TableFilter: React.FC<ComponentProps> = ({ column }) => {
         )
     } else if (filterVariant === "date-range") {
         return (
-            <div className="flex flex-row gap-10">
+            <div className="flex flex-row gap-2">
                 <input
                     data-testid="date-1"
                     type="date"
