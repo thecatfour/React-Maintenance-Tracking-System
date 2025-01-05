@@ -43,19 +43,19 @@ const TableFilter: React.FC<ComponentProps> = ({ column }) => {
         )
     } else if (filterVariant === "date-range") {
         return (
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 justify-between">
                 <input
                     data-testid="date-1"
                     type="date"
                     onChange={(e) => column.setFilterValue((old: any) => [e.target.value, old?.[1]])}
-                    className={inputClass}
+                    className={`${inputClass} max-w-[120px]`}
                 />
                 to
                 <input
                     data-testid="date-2"
                     type="date"
                     onChange={(e) => column.setFilterValue((old: any) => [old?.[0], e.target.value])}
-                    className={inputClass}
+                    className={`${inputClass} max-w-[120px]`}
                 />
             </div>
         )
@@ -64,7 +64,7 @@ const TableFilter: React.FC<ComponentProps> = ({ column }) => {
             <select
                 onChange={(e) => column.setFilterValue(e.target.value)}
                 value={column.getFilterValue()?.toString()}
-                className={`${inputClass} min-w-[125px]`}
+                className={`${inputClass} min-w-[135px]`}
                 data-testid="select-1"
             >
                 <option value="">All</option>
