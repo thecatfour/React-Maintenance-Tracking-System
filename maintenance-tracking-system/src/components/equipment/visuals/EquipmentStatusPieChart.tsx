@@ -27,13 +27,11 @@ const EquipmentStatusPieColors: DictFormat = {
 } as const;
 
 const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) => {
-    const [data, setData] = useState(equipmentArray);
     const [cellValues, setCellValues] = useState<SingleCell[]>([]);
     
     useEffect(() => {
-        setData(equipmentArray);
         createCells();
-    }, [data])
+    }, [equipmentArray])
 
     function createCells() {
         let preprocessedData: DictCell = {};
@@ -42,8 +40,8 @@ const EquipmentStatusPieChart: React.FC<ComponentProps> = ({ equipmentArray }) =
             preprocessedData[EquipmentStatus[index]] = {name: EquipmentStatus[index], value: 0};
         }
         
-        for (let index in data) {
-            preprocessedData[data[index].status as string].value += 1;
+        for (let index in equipmentArray) {
+            preprocessedData[equipmentArray[index].status as string].value += 1;
         }
 
         let newCells = [];

@@ -20,37 +20,33 @@ interface ComponentProps {
 }
 
 const MaintenanceHoursBarChart: React.FC<ComponentProps> = ({ mRecordsArray, equipmentArray }) => {
-    const [data, setData] = useState<MaintenanceRecord[]>(mRecordsArray);
     const [cellValues, setCellValues] = useState<SingleCell[]>([]);
-    const isFirstRender = useRef(true);
 
     useEffect(() => {
-        setData(mRecordsArray);
         createCells();
     }, [mRecordsArray])
 
     useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-
         createCells();
     }, [equipmentArray])
 
     function createCells() {
-        let preprocessedData: DictCell = {};
+        if (mRecordsArray.length === 0) {
+            return;
+        }
+
+        const preprocessedData: DictCell = {};
 
         for (let index in EquipmentDepartment) {
             preprocessedData[EquipmentDepartment[index]] = {name: EquipmentDepartment[index], hours: 0};
         }
 
-        for (let index in data) {
-            let equipment = equipmentArray.find((equip) => equip.id === data[index].equipmentId);
-            preprocessedData[equipment?.department as string].hours += data[index].hoursSpent;
+        for (let index in mRecordsArray) {
+            let equipment = equipmentArray.find((equip) => equip.id === mRecordsArray[index].equipmentId);
+            preprocessedData[equipment?.department as string].hours += mRecordsArray[index].hoursSpent;
         }
 
-        let newCells = [];
+        const newCells = [];
 
         for (let index in EquipmentDepartment) {
             newCells.push(preprocessedData[EquipmentDepartment[index]]);
