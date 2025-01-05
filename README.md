@@ -154,9 +154,9 @@ Clsx
 
 ### Architecture decisions
 The code for the app is organized into three main directories in the src/ file.
-1. app: contains the pages that are displayed to users.
-2. components: contains the components that are reused and rendered on pages.
-3. lib: contains other helper functions and files that do not have tsx elements.
+1. **app:** contains the pages that are displayed to users.
+2. **components:** contains the components that are reused and rendered on pages.
+3. **lib:** contains other helper functions and files that do not have tsx elements.
 
 The components/ and lib/ directory contain a structure similar to the following:
 ```
