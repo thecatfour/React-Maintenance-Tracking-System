@@ -4,7 +4,7 @@ import TableFilter from "@/components/generics/filters/TableFilter";
 import IndeterminateCheckbox from "@/components/generics/input/IndeterminateCheckbox";
 import { Equipment } from "@/lib/equipment/EquipmentInterface";
 import dateFilter from "@/lib/filters/DateFilter";
-import { MaintenanceRecord, MaintenanceRecordPriority, MaintenanceRecordStatus, MaintenanceRecordStatusColors, MaintenanceRecordType } from "@/lib/maintenance-records/MaintenanceRecordInterface";
+import { MaintenanceRecord, MaintenanceRecordPriority, MaintenanceRecordStatus, MaintenanceRecordType } from "@/lib/maintenance-records/MaintenanceRecordInterface";
 import { 
     ColumnDef, 
     flexRender, 
@@ -19,6 +19,7 @@ import {
     SortingState, 
     useReactTable 
 } from "@tanstack/react-table";
+import clsx from "clsx";
 import { Dispatch, useEffect, useMemo, useState } from "react";
 
 
@@ -33,9 +34,10 @@ interface ComponentProps {
     equipmentArray: Equipment[];
     mRecordsArray: MaintenanceRecord[];
     setSelectedRows: Dispatch<RowSelectionState>;
+    title?: string;
 }
 
-const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRecordsArray, setSelectedRows }) => {
+const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRecordsArray, setSelectedRows, title="Maintenance Records" }) => {
     const [data, setData] = useState<MaintenanceRecord[]>(mRecordsArray);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -50,10 +52,18 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
         setRowSelection({});
     }, [mRecordsArray])
 
+    function getRowColor(rowStatus: string) {
+        return clsx({
+            "bg-green-900":     rowStatus === "Complete",
+            "bg-red-900":       rowStatus === "Incomplete",
+            "bg-yellow-800":    rowStatus === "Pending Parts",
+        });
+    }
+
     const columns = useMemo<ColumnDef<MaintenanceRecord>[]>(() => [
         {
             id: "data",
-            header: () => <div className="font-bold text-2xl">Maintenance Records</div>,
+            header: () => <div className="font-bold text-2xl">{title}</div>,
             columns: [
                 {
                     id: "select",
@@ -176,7 +186,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                 {
                     accessorKey: "date",
                     header: "Date",
-                    size: 110,
+                    size: 150,
                     filterFn: dateFilter,
                     meta: {
                         filterVariant: "date-range",
@@ -297,7 +307,7 @@ const MaintenanceRecordTable: React.FC<ComponentProps> = ({ equipmentArray, mRec
                         <tr
                             data-testid="maintenance-record-row"
                             key={row.id}
-                            className={MaintenanceRecordStatusColors?.[row.getValue("completionStatus") as string]}
+                            className={getRowColor(row.getValue("completionStatus"))}
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
