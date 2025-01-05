@@ -90,7 +90,7 @@ $ npx playwright test --ui
 ## Testing Approach
 
 ### Testing strategy
-Unit tests are used on several components such as the forms or the filter components on the tables. They were implemented using Playwright and are located in the tests/ directory.
+Unit tests are used on several components such as the forms or the filter components on the tables. They were implemented using Playwright and are located in the *tests/* directory.
 - equipment-management.spec.ts contains tests for equipment.
 - maintenance-records-management.spec.ts constains tests for maintenance records.
 
