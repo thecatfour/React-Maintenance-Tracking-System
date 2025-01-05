@@ -11,17 +11,31 @@ import EquipmentStatusPieChart from "@/components/equipment/visuals/EquipmentSta
 import MaintenanceHoursBarChart from "@/components/maintenance-records/visuals/MaintenanceHoursBarChart";
 import MaintenanceRecordTable from "@/components/maintenance-records/visuals/MaintenanceRecordTable";
 import { RowSelectionState } from "@tanstack/react-table";
+import createRandomEquipment from "@/lib/equipment/CreateEquipment";
+import createRandomMaintenanceRecords from "@/lib/maintenance-records/CreateMaintenanceRecords";
 
 export default function Home() {
-    const [equipment, setEquipment] = useState<Equipment[]>(EXAMPLE_EQUIPMENT);
+    const [equipment, setEquipment] = useState<Equipment[]>([]);
     const [recentMRecords, setRecentMRecords] = useState<MaintenanceRecord[]>([]);
-    const [mRecords, setMRecords] = useState<MaintenanceRecord[]>(EXAMPLE_MAINTENANCE_RECORD);
+    const [mRecords, setMRecords] = useState<MaintenanceRecord[]>([]);
+    const [createRecords, setCreateRecords] = useState(true);
     
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [isEquipmentOpen, setIsEquipmentOpen] = useState(false);
     const [isMaintenananceRecordsOpen, setIsMaintenanceRecordsOpen] = useState(false);
 
     const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
+
+    useEffect(() => {
+        setEquipment(createRandomEquipment(50));
+    }, []);
+
+    useEffect(() => {
+        if (createRecords && equipment.length > 0) {
+            setMRecords(createRandomMaintenanceRecords(200, equipment));
+            setCreateRecords(false);
+        }
+    }, [equipment])
 
     useEffect(() => {
         let oneWeekAgo = new Date();
