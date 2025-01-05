@@ -16,7 +16,7 @@ import { useState, useMemo, useEffect, Dispatch } from "react";
 import IndeterminateCheckbox from "@/components/generics/input/IndeterminateCheckbox";
 import TableFilter from "@/components/generics/filters/TableFilter";
 import dateFilter from "@/lib/filters/DateFilter";
-
+import { clsx } from "clsx";
 
 declare module "@tanstack/react-table" {
     interface ColumnMeta<TData extends RowData, TValue> {
@@ -43,6 +43,15 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
         setData(equipmentArray);
         setRowSelection({});
     }, [equipmentArray])
+
+    function getRowColor(rowStatus: string) {
+        return clsx({
+            "bg-green-800":     rowStatus === "Operational",
+            "bg-red-800":       rowStatus === "Down",
+            "bg-yellow-700":    rowStatus === "Maintenance",
+            "bg-gray-600":      rowStatus === "Retired",
+        });
+    }
 
     const columns = useMemo<ColumnDef<Equipment>[]>(() => [
         {
@@ -210,7 +219,7 @@ const EquipmentTable: React.FC<ComponentProps> = ({ equipmentArray, setSelectedR
                         <tr
                             data-testid="equipment-row"
                             key={row.id}
-                            className={EquipmentStatusColors?.[row.getValue("status") as string]}
+                            className={getRowColor(row.getValue("status"))}
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
